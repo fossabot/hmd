@@ -61,13 +61,15 @@ class AbstractParser(object):
         if '$' in line:
 
             # find all unique identifiers
-            identifiers = set(re.findall('\$[A-Za-z]{1}\w*', line))
+            identifiers = set(re.findall(r'\$[A-Za-z]{1}\w*', line))
 
             # store/interpolate identifiers
             for v_i in identifiers:
                 if '=' in line:
-                    try: v_d = tokens[line.index('=')+1:line.index('#')] # upto comment
-                    except ValueError: v_d = tokens[line.index('=')+1:] # upto EOL
+                    definition = re.findall(r'=\s*.+$', line) # extract =.+
+                    v_di = re.sub(r'^=\s*', '', definition[0]) # delete =\s*
+                    try: v_d = tokens[line.index(v_di):line.index('#')] # upto comment
+                    except ValueError: v_d = tokens[line.index(v_di):] # upto EOL
                     self.variables[v_i] = v_d
                 else:
                     if v_i in self.variables.keys():

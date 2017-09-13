@@ -67,10 +67,14 @@ category_1  category_2  ..  category_i  (definition)
 
 ## Variable
 
-- **variable** - *define a variable called "a"*:
+- **variable** - *define variables*:
 
 ```
-$a=(b)(c)(d)
+$a=(a)
+$b= (b)
+$c =(b)
+$d = (d)
+$e =    (e)(f|g)
 ```
 
 ## Comment

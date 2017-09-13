@@ -31,12 +31,12 @@ C    D  (e)
 
 ## Variable
 
-When declaring a variable, there should be no space between identifier and declaration.
+When declaring a variable, there can be infinite or no spaces between declaration `=` and definition.
 
 ```bash
-$x=(a)
-$y=(b)
-$z=(c)
+$x =(a)
+$y =    (b)
+$z = (c)
 A B	(a)$x
 C D	(a)$y
 E F	(a)$z
@@ -50,11 +50,11 @@ O P	$x$y$z
 You don't need to declare everything on the top. **hmdc** is flexible that you can declare variables on-the-go:
 
 ```bash
-$x=(a)
+$x= (a)
 A B	(a)$x
 G H	$x
 
-$y=(b)
+$y = (b)
 C D	(a)$y
 I J	$y
 
@@ -67,14 +67,6 @@ O P	$x$y$z
 
 # but below will throw an exception
 Q R   $s
-```
-
-However, the limitation is variables cannot declare existing variables:
-
-```bash
-# not possible
-$A=(a)
-$B=$A
 ```
 
 ## Spaces

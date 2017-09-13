@@ -1,0 +1,7 @@
+$A = (b)(c)(d|e)
+
+A	A	(a)(a)
+A	B	(a)(b)
+A	C	(a)(c)($A)
+
+$A = (b)(c)(d|e)

@@ -69,6 +69,14 @@ O P	$x$y$z
 Q R   $s
 ```
 
+However, the limitation is variables cannot declare existing variables:
+
+```bash
+# not possible
+$A=(a)
+$B=$A
+```
+
 ## Spaces
 
 Rules can be declared with arbitrary number of leading and trailing spaces/tabs:

@@ -20,7 +20,7 @@
 
 ## Dependencies
 
-```
+```bash
 ~$ sudo -H pip install pickle
 ~$ sudo -H pip install nltk # NLP
 ```

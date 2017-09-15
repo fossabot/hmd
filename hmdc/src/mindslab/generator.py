@@ -33,7 +33,7 @@ class HMDSchema(object):
         ''' pack line into schema.
         '''
         if not line: return
-        if all([ x in line for x in ['$', '='] ]):
+        if all([ x in line for x in ('$', '=') ]):
             self.definition = line
             return True
         else:

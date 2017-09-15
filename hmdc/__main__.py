@@ -96,6 +96,12 @@ if __name__ == '__main__':
                          default=False,
                          help='remove repeated lines (default: off)')
 
+    # -x: convert inline terms into lemmas.
+    n_optim.add_argument('-x',
+                         action='store_tru',
+                         default=False,
+                         help=' convert inline terms into lemmas (default: off)')
+
     # -t: run test suite and exit.
     n_test.add_argument('-t', '--test',
                         action='store_true',

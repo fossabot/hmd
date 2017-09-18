@@ -98,7 +98,7 @@ if __name__ == '__main__':
 
     # -x: convert inline terms into lemmas.
     n_optim.add_argument('-x',
-                         action='store_tru',
+                         action='store_true',
                          default=False,
                          help=' convert inline terms into lemmas (default: off)')
 

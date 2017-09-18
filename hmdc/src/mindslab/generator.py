@@ -153,18 +153,19 @@ class HMDGenerator(AbstractGenerator):
         except IndexError: blocks = []
         if not blocks: return blocks
 
-        # tokenize into sets
+        # tokenize into sets and also remember their index
         s_p, s_q = [], []
-        for block in blocks:
-            if '|' in block: s_p.append(block.split('|'))
-            else: s_q.append(block)
-
-        # hmd optimization
-        if self.hmd_sorted: s_p = map(sorted, s_p)
+        for i, block in enumerate(blocks):
+            if '|' in block: s_p.append([ (i, block) for block in block.split('|') ])
+            else: s_q.append((i, block))
 
         # find cartesian product
         if s_p:
-            nested =  reduce(lambda x,y:itertools.product(x,y), s_p)
+
+            # calculate product
+            nested = reduce(lambda x,y:itertools.product(x,y), s_p)
+
+            # flatten products
             product = []
             for nest in nested:
                 if isinstance(nest, basestring):
@@ -173,9 +174,19 @@ class HMDGenerator(AbstractGenerator):
                     product.append(self.__flatten(nest))
             product = map(list, product)
 
-            # pair with categories
-            try: permutation = [ [category, '(%s)' % ')('.join(s_q + pairable)] for pairable in product ]
-            except: permutation = []
+            # pair products with categories
+            try:
+                permutation = []
+                for pairable in product:
+                    stack = sorted(s_q + [tuple(pairable)]) # restore order
+                    permutation.append(
+                        [category, '(%s)' % ')('.join(map(lambda x:x[1], stack))]
+                    )
+            except:
+                debug('w', 'GENERATOR: failed to pair categories and definitions.\n')
+                permutation = []
+
+        # there is no product
         else: permutation = [[category, definition]]
         return permutation
 

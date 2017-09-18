@@ -100,7 +100,7 @@ class HMDGenerator(AbstractGenerator):
             schema = HMDSchema()
             if not schema.pack(hmd):
                 debug('w', "GENERATOR: cannot create schema: '%s'.\n" % hmd)
-                pass
+                pass # disregard the unpackable format and continue
             else: schemas.append(schema)
 
         # categories must be length-filtered due to variables
@@ -164,7 +164,7 @@ class HMDGenerator(AbstractGenerator):
 
         # find cartesian product
         if s_p:
-            nested =  [ product for product in reduce(lambda x,y:itertools.product(x,y), s_p) ]
+            nested =  reduce(lambda x,y:itertools.product(x,y), s_p)
             product = []
             for nest in nested:
                 if isinstance(nest, basestring):

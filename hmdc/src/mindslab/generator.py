@@ -165,10 +165,16 @@ class HMDGenerator(AbstractGenerator):
         # find cartesian product
         if s_p:
             nested =  [ product for product in reduce(lambda x,y:itertools.product(x,y), s_p) ]
-            product = map(list, [ self.__flatten(nest) for nest in nested if not isinstance(nest, basestring) ])
+            product = []
+            for nest in nested:
+                if isinstance(nest, basestring):
+                    product.append(nest)
+                else:
+                    product.append(self.__flatten(nest))
+            product = map(list, product)
 
             # pair with categories
-            try: permutation = [ [category, '(%s)' % ')('.join(pairable + s_q)] for pairable in product ]
+            try: permutation = [ [category, '(%s)' % ')('.join(s_q + pairable)] for pairable in product ]
             except: permutation = []
         else: permutation = [[category, definition]]
         return permutation
@@ -187,14 +193,14 @@ class HMDGenerator(AbstractGenerator):
 
         # standardize category count
         matrix = []
-        min_categories = min(min(map(len, categories)), self.max_categories) # find the smallest
+        limit = min(min(map(len, categories)), self.max_categories) # find the smallest
         for i in xrange(len(categories)):
 
             # schema
             category, definition = categories[i], definitions[i]
 
             # normalize category count
-            deviation = int(len(category) - min_categories)
+            deviation = int(len(category) - limit)
             distance = 0 - deviation # distance from origin
             if deviation >= 0: category.extend([''] * distance)
             else:

@@ -9,24 +9,22 @@ import sys
 import os
 
 try:
-    # libraries
-    from src.abstract.automata.automata import AbstractAutomata, AbstractAutomataMachine
     from src.abstract.generator.generator import AbstractGenerator
+    from src.abstract.automata.automata import AbstractAutomataMachine
+    from src.abstract.automata.automata import AbstractAutomata
     from src.abstract.parser.parser import AbstractParser
     from src.abstract.lexer.token import AbstractToken
     from src.abstract.lexer.lexer import AbstractLexer
-    from src.mindslab.generator import HMDSchema, HMDGenerator
+    from src.mindslab.generator import HMDGenerator
+    from src.mindslab.generator import HMDSchema
     from src.mindslab.grammar import HMDGrammar
     from src.mindslab.syntax import *
+    from tests.test_automata import TestAutomata
+    from tests.test_parser import TestParser
+    from tests.test_lexer import TestLexer
     from src.debug import *
     import argparse
     import unittest
-
-    # tests
-    from tests.test_lexer import TestLexer
-    from tests.test_parser import TestParser
-    from tests.test_automata import TestAutomata
-    import pickle
 except ImportError as message:
     raise ImportError(message)
 
@@ -120,11 +118,11 @@ if __name__ == '__main__':
         if args.test:
 
             # load tests
-            test_suites, test_cases = [], [
+            test_suites, test_cases = [], (
                 TestLexer,
                 TestParser,
                 TestAutomata
-            ]
+            )
             for test_case in test_cases:
                 test_suite = unittest.TestLoader().loadTestsFromTestCase(test_case)
                 test_suites.append(test_suite)
@@ -135,16 +133,17 @@ if __name__ == '__main__':
             sys.exit(not result.wasSuccessful())
 
         # compile string
-        if args.c: result = generator.generate([args.c])
+        if args.c:
+            result = generator.generate([args.c])
 
         # compile file
         elif args.f:
             if not os.path.isfile(args.f):
                 debug('w', "file '%s' does not exist.\n" % args.f)
                 sys.exit(1)
-            with open(args.f, 'r') as f:
+            with open(args.f) as f:
                 c = f.read().split('\n')
-            result = generator.generate(c)
+                result = generator.generate(c)
 
         # output to file
         if args.o:
@@ -158,6 +157,5 @@ if __name__ == '__main__':
             except: pass
 
     except KeyboardInterrupt:
-        debug('i', 'Cleaning up..\n')
         del generator
         sys.exit(0)

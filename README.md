@@ -46,11 +46,11 @@
 
 ## Syntax
 
-See [syntax](./SYNTAX.md).
+See [syntax](./docs/SYNTAX.md).
 
 ## Example
 
-See [example](./EXAMPLE.md).
+See [example](./docs/EXAMPLE.md).
 
 ## Design
 

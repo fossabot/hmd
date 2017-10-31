@@ -4,19 +4,18 @@ set -euo pipefail
 
 {
   export PYTHON="$(which python)"
+
   export SOURCE='hmdc'
   export BUILD='build'
   export BINARY='hmdc'
   export OUTPUT="$(pwd)/${BUILD}/${BINARY}"
 
   [ -n "$(which zip)" ] || {
-    sudo apt-get install -y zip
-  }
+    sudo apt-get install -y zip;}
 
   # clean up
   [ -d "${BUILD}" ] && {
-    rm -rfv "${BUILD}"
-  }
+    rm -rfv "${BUILD}";}
   find "${SOURCE}" \
        -type f \
        -iname "*.py[oc]" \

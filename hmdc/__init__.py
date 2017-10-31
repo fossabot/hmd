@@ -2,13 +2,13 @@
 
 __all__ = [
     '__license__',
-    '__logo__'
+    '__logo__',
     '__program__',
-    '__version__',
+    '__version__'
 ]
 
 __program__ = 'hmdc'
-__version__ = '1.5.5'
+__version__ = '1.5.6'
 __license__ = 'MIT'
 
 __logo__ = r'''

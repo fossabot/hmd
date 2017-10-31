@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from src.abstract.automata.automata import AbstractAutomata,
+from src.abstract.automata.automata import AbstractAutomata
 from src.abstract.automata.automata import AbstractAutomataMachine
 
 class HMDGrammar(object):

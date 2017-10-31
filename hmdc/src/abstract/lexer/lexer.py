@@ -28,7 +28,8 @@ class AbstractLexer(object):
 
     def lex(self, tokenable):
         ''' prototype to lex a string or enumerable strings (e.g. list or tuple).
-        + tokenable {str|list|tuple} -- input string(s) to tokenize.
+        params:
+          + tokenable {str|list|tuple} -- input string(s) to tokenize.
         '''
         if not (isinstance(tokenable, basestring) or \
                 isinstance(tokenable, tuple) or \
@@ -58,7 +59,8 @@ class AbstractLexer(object):
 
     def __tokenize(self, character=''):
         ''' prototype to tokenize a character.
-         + charcter {str} -- a character to be tokenized.
+        params:
+           + charcter {str} -- a character to be tokenized.
         '''
         if not isinstance(character, str) or 1 != len(character):
             debug('w', "can't be tokenized: '%s'" % str(character))

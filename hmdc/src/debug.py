@@ -5,7 +5,7 @@ import time
 
 def debug(category='', message=''):
     ''' custom debugging function.
-    param:
+    params:
       + category {str} -- INFO, DEBUG, WARN
       + message {str} -- a message to print
     '''

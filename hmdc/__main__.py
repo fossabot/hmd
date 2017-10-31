@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 from __future__ import absolute_import
-
 import errno
 import os
 import sys
@@ -27,6 +26,10 @@ try:
     import unittest
 except ImportError as message:
     raise ImportError(message)
+
+#
+# hmdc
+#
 
 if __name__ == '__main__':
 

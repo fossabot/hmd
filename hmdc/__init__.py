@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 
 __all__ = [
-    '__program__',
-    '__version__',
     '__license__',
     '__logo__'
+    '__program__',
+    '__version__',
 ]
 
 __program__ = 'hmdc'
-__version__ = '1.5.4'
+__version__ = '1.5.5'
 __license__ = 'MIT'
 
 __logo__ = r'''

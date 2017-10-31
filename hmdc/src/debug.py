@@ -1,26 +1,27 @@
 #!/usr/bin/env python
 
-import time
 import sys
+import time
 
 def debug(category='', message=''):
     ''' custom debugging function.
-    + category {str} -- INFO, DEBUG, WARN
-    + message {str} -- message to print.
+    param:
+      + category {str} -- INFO, DEBUG, WARN
+      + message {str} -- a message to print
     '''
 
     # colors
-    c_rst = '\033[39m' # reset
+    rst = '\033[39m' # reset
     c_w = '\033[97m' # white
     c_p = '\033[95m' # purple
     c_g = '\033[92m' # green
     c_r = '\033[91m' # red
     c_b = '\033[96m' # blue
 
-    timestamp = '%s[%s]%s' % (c_w, time.asctime(), c_rst)
+    # create template
+    timestamp = '%s[%s]%s' % (c_w, time.asctime(), rst)
     template = ' '.join([timestamp, '%s[%s%s%s] %s'])
-
-    category = category.strip().lower()
+    category = category.lower().strip()
 
     # INFO
     if category in ['i', 'info']:

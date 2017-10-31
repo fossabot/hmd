@@ -1,28 +1,28 @@
 #!/usr/bin/env python
 
 from __future__ import absolute_import
-from __init__ import *
 
 import errno
-import time
-import sys
 import os
+import sys
+import time
 
 try:
-    from src.abstract.generator.generator import AbstractGenerator
-    from src.abstract.automata.automata import AbstractAutomataMachine
+    from __init__ import *
     from src.abstract.automata.automata import AbstractAutomata
-    from src.abstract.parser.parser import AbstractParser
-    from src.abstract.lexer.token import AbstractToken
+    from src.abstract.automata.automata import AbstractAutomataMachine
+    from src.abstract.generator.generator import AbstractGenerator
     from src.abstract.lexer.lexer import AbstractLexer
+    from src.abstract.lexer.token import AbstractToken
+    from src.abstract.parser.parser import AbstractParser
+    from src.debug import *
     from src.mindslab.generator import HMDGenerator
     from src.mindslab.generator import HMDSchema
     from src.mindslab.grammar import HMDGrammar
     from src.mindslab.syntax import *
     from tests.test_automata import TestAutomata
-    from tests.test_parser import TestParser
     from tests.test_lexer import TestLexer
-    from src.debug import *
+    from tests.test_parser import TestParser
     import argparse
     import unittest
 except ImportError as message:
@@ -110,14 +110,10 @@ if __name__ == '__main__':
     generator = HMDGenerator(
         max_categories=(args.l or 10),
         hmd_sorted=(args.s or False),
-        hmd_unique=(args.u or False)
-    )
+        hmd_unique=(args.u or False))
+
     try:
-
-        # run tests
         if args.test:
-
-            # load tests
             test_suites, test_cases = [], (
                 TestLexer,
                 TestParser,
@@ -126,36 +122,30 @@ if __name__ == '__main__':
             for test_case in test_cases:
                 test_suite = unittest.TestLoader().loadTestsFromTestCase(test_case)
                 test_suites.append(test_suite)
-
-            # run quietly
             sys.stdout = sys.stderr = open(os.devnull, 'wb') # /dev/null
             result = unittest.TextTestRunner(verbosity=2).run(unittest.TestSuite(test_suites))
             sys.exit(not result.wasSuccessful())
 
-        # compile string
-        if args.c:
+        if args.c: # compile string
             result = generator.generate([args.c])
 
-        # compile file
-        elif args.f:
+        elif args.f: # compile file
             if not os.path.isfile(args.f):
                 debug('w', "file '%s' does not exist.\n" % args.f)
-                sys.exit(1)
+                sys.exit(errno.ENOENT)
             with open(args.f) as f:
                 c = f.read().split('\n')
                 result = generator.generate(c)
 
-        # output to file
-        if args.o:
+        if args.o: # output to file
             with open(args.o, 'w') as f:
                 f.write(result)
-                f.flush()
 
-        # output to STDOUT
-        else:
+        else: # output to STDOUT
             try: sys.stdout.write(result)
             except: pass
 
-    except KeyboardInterrupt:
+    except KeyboardInterrupt: pass
+    finally:
         del generator
         sys.exit(0)

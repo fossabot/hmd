@@ -3,15 +3,15 @@
 from src.abstract.lexer.token import AbstractToken
 from src.debug import *
 
-from re import match
 from os import path
-
+from re import match
 import errno
 import sys
 
 class AbstractLexer(object):
     ''' an abstract lexicographic analyzer that tokenizes a text using input grammar (regex).
-    + rules {dict} -- custom dictionary of regex to lexical analyze.
+    params:
+      + rules {dict} -- custom dictionary of regex to lexical analyze.
     '''
 
     def __init__(self, rules={}):
@@ -62,8 +62,7 @@ class AbstractLexer(object):
         '''
         if not isinstance(character, str) or 1 != len(character):
             debug('w', "can't be tokenized: '%s'" % str(character))
-            return
-
+            return None
         for rule in sorted(self.rules.values()):
             token = (self.rules.keys()[self.rules.values().index(rule)]
                      if match(rule, character) else None)

@@ -5,12 +5,13 @@ from src.abstract.lexer.token import AbstractToken
 from src.debug import *
 
 from collections import deque
-import sys
 import re
+import sys
 
 class AbstractParser(object):
     ''' an abstract parser to convert tokens into build instruction code.
-    + grammar {AbstractAutomataMachine} -- grammar to check and parse tokens.
+    params:
+      + grammar {AbstractAutomataMachine} -- grammar to check and parse tokens.
     '''
 
     def __init__(self, grammar):

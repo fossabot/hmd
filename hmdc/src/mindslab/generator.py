@@ -1,17 +1,17 @@
 #!/usr/bin/env python
 
+import itertools
+import re
+import sys
+
 from src.abstract.automata.automata import AbstractAutomata, AbstractAutomataMachine
 from src.abstract.generator.generator import AbstractGenerator
-from src.abstract.parser.parser import AbstractParser
-from src.abstract.lexer.token import AbstractToken
 from src.abstract.lexer.lexer import AbstractLexer
+from src.abstract.lexer.token import AbstractToken
+from src.abstract.parser.parser import AbstractParser
+from src.debug import *
 from src.mindslab.grammar import HMDGrammar
 from src.mindslab.syntax import *
-from src.debug import *
-
-import itertools
-import sys
-import re
 
 class HMDSchema(object):
     ''' an abstract hmd schema.

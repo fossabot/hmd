@@ -2,10 +2,11 @@
 
 class AbstractToken(object):
     ''' an abstract token.
-    + value {str} -- tokenized value.
-    + type {str} -- token type.
-    + x {int} -- x-coordinate of value.
-    + y {int} -- y-coordinate of value.
+    params:
+      + value {str} -- tokenized value.
+      + type {str} -- token type.
+      + x {int} -- x-coordinate of value.
+      + y {int} -- y-coordinate of value.
     '''
 
     def __init__(self, value=None, type=None, x=-1, y=-1):
@@ -38,27 +39,31 @@ class AbstractToken(object):
 
     def exists(self, key):
         ''' prototype to check if a key exists.
-        + key {str} -- key to check.
+        params:
+          + key {str} -- key to check.
         '''
         return self.__dict__.__contains__(key)
 
     def get(self, key):
         ''' prototype to get value of a given key.
-        + key {str} -- key to get value.
+        params:
+          + key {str} -- key to get value.
         '''
         return (self.__dict__[key] if self.exists(key) else None)
 
     def set(self, key, value):
         ''' prototype to set value of a key.
-        + key {str} -- key to replace value with.
-        + value {str} -- value to replace with.
+        params:
+          + key {str} -- key to replace value with.
+          + value {str} -- value to replace with.
         '''
         self.__dict__[key] = (value if key else None)
         return self.__dict__.get(key)
 
     def delete(self, key):
         ''' prototype to delete a key.
-        + key {str} -- key to delete.
+        params:
+          + key {str} -- key to delete.
         '''
         if self.exists(key):
             self.__dict__.pop(key)

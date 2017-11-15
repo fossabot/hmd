@@ -18,12 +18,6 @@
 - Pack to single executable binary.
 - Complete test suite.
 
-## Dependencies
-
-```bash
-~$ sudo pip install nltk
-```
-
 ## Build
 
 ```bash

@@ -165,7 +165,7 @@ class HMDGenerator(AbstractGenerator):
             nested = reduce(lambda x,y:itertools.product(x,y), s_p)
 
             # flatten products
-            product = map(list, [ nest  if isinstance(nest, basestring)
+            product = map(list, [ nest if isinstance(nest, basestring)
                                   else self.__flatten(nest)
                                   for nest in nested ])
 

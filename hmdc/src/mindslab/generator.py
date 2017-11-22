@@ -1,9 +1,5 @@
 #!/usr/bin/env python
 
-import itertools
-import re
-import sys
-
 from src.abstract.automata.automata import AbstractAutomata, AbstractAutomataMachine
 from src.abstract.generator.generator import AbstractGenerator
 from src.abstract.lexer.lexer import AbstractLexer
@@ -12,6 +8,10 @@ from src.abstract.parser.parser import AbstractParser
 from src.debug import *
 from src.mindslab.grammar import HMDGrammar
 from src.mindslab.syntax import *
+
+import itertools
+import re
+import sys
 
 class HMDSchema(object):
     ''' an abstract hmd schema.
@@ -24,10 +24,8 @@ class HMDSchema(object):
     def view(self):
         ''' view schema.
         '''
-        return (
-            self.category,
-            self.definition
-        )
+        return (self.category,
+                self.definition)
 
     def pack(self, line=''):
         ''' pack line into schema.
@@ -49,15 +47,16 @@ class HMDSchema(object):
         '''
         try: line = '\t'.join(self.category, self.definition)
         except:
-            line = ''
             debug('w', 'incorrect schema structure => defaulting to empty schema.\n')
+            line = ''
         return line
 
 class HMDGenerator(AbstractGenerator):
     ''' default hierarchial multiple dictionary generator.
     '''
 
-    def __init__(self, max_categories=10,
+    def __init__(self,
+                 max_categories=10,
                  hmd_optimized=False,
                  hmd_sorted=False,
                  hmd_unique=False):
@@ -166,22 +165,16 @@ class HMDGenerator(AbstractGenerator):
             nested = reduce(lambda x,y:itertools.product(x,y), s_p)
 
             # flatten products
-            product = []
-            for nest in nested:
-                if isinstance(nest, basestring):
-                    product.append(nest)
-                else:
-                    product.append(self.__flatten(nest))
-            product = map(list, product)
+            product = map(list, [ nest for nest in nested
+                                  if isinstance(nest, basestring)
+                                  else self.__flatten(nest) ])
 
             # pair products with categories
             try:
                 permutation = []
                 for pairable in product:
                     stack = sorted(s_q + [tuple(pairable)]) # restore order
-                    permutation.append(
-                        [category, '(%s)' % ')('.join(map(lambda x:x[1], stack))]
-                    )
+                    permutation.append([category, '(%s)' % ')('.join(map(lambda x:x[1], stack))])
             except:
                 debug('w', 'GENERATOR: failed to pair categories and definitions.\n')
                 permutation = []
@@ -227,4 +220,4 @@ class HMDGenerator(AbstractGenerator):
                     '$'.join(definition[1:-1].split(')(')) # definition
                 ]))
 
-        return '\n'.join(matrix)
+        return '\n'.join(set(matrix))

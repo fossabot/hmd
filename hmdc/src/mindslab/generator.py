@@ -165,9 +165,9 @@ class HMDGenerator(AbstractGenerator):
             nested = reduce(lambda x,y:itertools.product(x,y), s_p)
 
             # flatten products
-            product = map(list, [ nest for nest in nested
-                                  if isinstance(nest, basestring)
-                                  else self.__flatten(nest) ])
+            product = map(list, [ nest  if isinstance(nest, basestring)
+                                  else self.__flatten(nest)
+                                  for nest in nested ])
 
             # pair products with categories
             try:

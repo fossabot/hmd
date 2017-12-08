@@ -4,11 +4,10 @@ __all__ = [
     '__license__',
     '__logo__',
     '__program__',
-    '__version__'
-]
+    '__version__']
 
 __program__ = 'hmdc'
-__version__ = '1.5.7'
+__version__ = '1.5.8'
 __license__ = 'MIT'
 
 __logo__ = r'''
@@ -21,4 +20,4 @@ __logo__ = r'''
  HMD-Compiler (v%s)
  https://git.io/v5EWW
 
-''' % (__version__)
+''' % __version__

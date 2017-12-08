@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 from __future__ import absolute_import
+
 import errno
 import os
 import sys
@@ -27,16 +28,13 @@ try:
 except ImportError as message:
     raise ImportError(message)
 
-#
-# hmdc
-#
 
 if __name__ == '__main__':
 
     # print logo if no flag
     if not len(sys.argv) - 1:
         sys.stdout.write(__logo__)
-        sys.exit(0)
+        sys.exit()
 
     # adjust path if `this` is packed executable.
     if __package__ is None and not hasattr(sys, 'frozen'):
@@ -116,6 +114,8 @@ if __name__ == '__main__':
         hmd_unique=(args.u or False))
 
     try:
+
+        # self-test
         if args.test:
             test_suites, test_cases = [], (
                 TestLexer,
@@ -129,10 +129,12 @@ if __name__ == '__main__':
             result = unittest.TextTestRunner(verbosity=2).run(unittest.TestSuite(test_suites))
             sys.exit(not result.wasSuccessful())
 
-        if args.c: # compile string
+        # compile string
+        if args.c:
             result = generator.generate([args.c])
 
-        elif args.f: # compile file
+        # compile file
+        elif args.f:
             if not os.path.isfile(args.f):
                 debug('w', "file '%s' does not exist.\n" % args.f)
                 sys.exit(errno.ENOENT)
@@ -140,15 +142,17 @@ if __name__ == '__main__':
                 c = f.read().split('\n')
                 result = generator.generate(c)
 
-        if args.o: # output to file
+        # output to file
+        if args.o:
             with open(args.o, 'w') as f:
                 f.write(result)
 
-        else: # output to STDOUT
+        # output to STDOUT
+        else:
             try: sys.stdout.write(result)
             except: pass
 
     except KeyboardInterrupt: pass
     finally:
         del generator
-        sys.exit(0)
+        sys.exit()

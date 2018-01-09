@@ -3,7 +3,6 @@ install: true
 
 os:
   - linux
-  - osx
 
 language: python
 python:
@@ -15,16 +14,13 @@ python:
   - "3.6"
   - "nightly"
 
-matrix:
-  allow_failures:
-    - os: osx
-
 branches:
   only:
   - master
 
 script:
 - make test
+- make clean
 - make
 - cd ./build
 - ./hmdc -t

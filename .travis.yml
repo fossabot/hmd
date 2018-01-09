@@ -2,6 +2,16 @@
 language: python
 python:
   - '2.7'
+  - "2.6"
+  - "2.7"
+  - "3.3"
+  - "3.4"
+  - "3.5"
+  - "3.5-dev"
+  - "3.6"
+  - "3.6-dev"
+  - "3.7-dev"
+  - "nightly"
 
 branches:
   only:
@@ -10,6 +20,6 @@ branches:
 install: true
 script:
 - python ./hmdc -t
-- bash build.sh
+- make
 - cd ./build
 - ./hmdc -t

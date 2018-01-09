@@ -12,6 +12,9 @@ all:
 	rm -fv $(OUTPUT).zip
 	chmod u+x -v $(OUTPUT)
 
+test:
+	python $(SOURCE) -t
+
 clean:
 	rm -rfv ./build
 	find $(SOURCE) \

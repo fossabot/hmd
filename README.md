@@ -17,33 +17,16 @@
 - Pack to single executable binary.
 - Complete test suite.
 
-## Build
-
-```bash
-~$ ./build.sh
-```
-
-## Test
-
-```bash
-~$ # cd ./build
-~$ python ./hmdc -t
-```
-
 ## Usage
 
 ```bash
-~$ # cd ./build
-~$ python ./hmdc -h
+~$ make && cd ./build
+~$ ./hmdc -h
 ```
 
-## Syntax
+## Documentations
 
-See [syntax](./docs/SYNTAX.md).
-
-## Example
-
-See [example](./docs/EXAMPLE.md).
+See [syntax](./docs/SYNTAX.md) or some [examples](./docs/EXAMPLE.md).
 
 ## Design
 

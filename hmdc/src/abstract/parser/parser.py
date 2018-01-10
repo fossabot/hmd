@@ -97,6 +97,7 @@ class AbstractParser(object):
                 self.syntax_stack.append(tokens[-1]) # debug
                 self.__throw_syntax_error()
 
+        # not parseable
         else:
             self.syntax_stack.append(tokens[0]) # debug
             self.syntax_stack.append(tokens[-1]) # debug
@@ -109,7 +110,7 @@ class AbstractParser(object):
         '''
         self.syntax_stack.append(tokens[0])
         self.syntax_heap.append(tokens[0].value)
-        for token in tokens[1::]:
+        for token in tokens[1:]:
 
             # check syntax
             self.syntax_stack.append(token)

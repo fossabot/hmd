@@ -120,7 +120,7 @@ class HMDGenerator(AbstractGenerator):
         + lines {list} -- lines to convert from hmd to matrix.
         '''
         try:
-            self.hmd = [ line.strip() for line in filter(len, lines) ]
+            self.hmd = [ line.strip() for line in lines if line ]
             if self.hmd_unique: self.hmd = list(set(self.hmd)) # unique
             if self.hmd_sorted: self.hmd.sort() # sort
         except:

@@ -39,7 +39,7 @@ class AbstractParser(object):
           + tokens {list|list[list]} -- list or nested lists of tokens from lexer.
         '''
         if not tokens: return []
-        if not all([isinstance(token, list) for token in tokens]):
+        if not all(map(lambda token:isinstance(token, list), tokens)):
             self.__evaluate(tokens) # tokens
         else: [ self.__evaluate(token) for token in tokens ] # nested tokens
         return self.code

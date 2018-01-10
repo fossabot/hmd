@@ -20,11 +20,13 @@ class AbstractParser(object):
         self.grammar = grammar.get_automata()
         self.variables = {}
 
-        # stacks
-        self.q_t = deque([None, None], maxlen=2) # circular queue
-        self.q_b = []
+        # syntax
+        # - "stack" used to check syntax.
+        # - "heap" used to store parsed block of code.
+        self.syntax_stack = deque([None, None], maxlen=2) # circular queue
+        self.syntax_heap = []
 
-        # build instruction
+        # parsed result
         self.code = []
 
     #
@@ -34,13 +36,13 @@ class AbstractParser(object):
     def parse(self, tokens=[]):
         ''' prototype to parse lexed single line string or a list of strings.
         params:
-          + tokens {list|list[list]} -- list or nested lists of tokens.
+          + tokens {list|list[list]} -- list or nested lists of tokens from lexer.
         '''
         if not tokens: return []
         if not all([isinstance(token, list) for token in tokens]):
             self.__evaluate(tokens) # tokens
         else: [ self.__evaluate(token) for token in tokens ] # nested tokens
-        return self.code or []
+        return self.code
 
     #
     # private
@@ -70,8 +72,8 @@ class AbstractParser(object):
             # store/interpolate identifiers
             for v_i in identifiers:
                 if '=' in line:
-                    definition = re.findall(r'=\s*.+$', line) # extract =.+
-                    v_di = re.sub(r'^=\s*', '', definition[0]) # delete =\s*
+                    definition = re.findall(r'=\s*.+$', line) # extract definition
+                    v_di = re.sub(r'^=\s*', '', definition[0]) # ltrim and rtrim
                     try: v_d = tokens[line.index(v_di):line.index('#')] # upto comment
                     except ValueError: v_d = tokens[line.index(v_di):] # upto EOL
                     self.variables[v_i] = v_d
@@ -91,13 +93,13 @@ class AbstractParser(object):
         elif tokens[0].type == 'RULE_BEGIN' and tokens[-1].type == 'RULE_END':
             try: self.__parse_tokens(tokens)
             except:
-                self.q_t.append(tokens[0]) # debug
-                self.q_t.append(tokens[-1]) # debug
+                self.syntax_stack.append(tokens[0]) # debug
+                self.syntax_stack.append(tokens[-1]) # debug
                 self.__throw_syntax_error()
 
         else:
-            self.q_t.append(tokens[0]) # debug
-            self.q_t.append(tokens[-1]) # debug
+            self.syntax_stack.append(tokens[0]) # debug
+            self.syntax_stack.append(tokens[-1]) # debug
             self.__throw_syntax_error()
 
     def __parse_tokens(self, tokens=[]):
@@ -105,27 +107,27 @@ class AbstractParser(object):
         params:
           + tokens {list} -- list of tokens from lexer.
         '''
-        self.q_t.append(tokens[0])
-        self.q_b.append(tokens[0].value)
+        self.syntax_stack.append(tokens[0])
+        self.syntax_heap.append(tokens[0].value)
         for token in tokens[1::]:
 
             # check syntax
-            self.q_t.append(token)
+            self.syntax_stack.append(token)
             if not self.__is_valid_syntax():
                 self.__throw_syntax_error()
                 return
 
             # consolidate
-            self.q_b.append(token.value)
+            self.syntax_heap.append(token.value)
 
         # add instruction
-        self.code.append(''.join(self.q_b[:]))
-        self.q_b[:] = [] # clear
+        self.code.append(''.join(self.syntax_heap[:]))
+        self.syntax_heap[:] = [] # clear
 
     def __is_valid_syntax(self):
         ''' prototype to syntax check.
         '''
-        q_s, q_e = self.q_t[0], self.q_t[1] # queue start and end
+        q_s, q_e = self.syntax_stack[0], self.syntax_stack[1] # queue start and end
         if not (q_s or q_e):
             return False
 
@@ -145,9 +147,10 @@ class AbstractParser(object):
     #
 
     def __print_stack(self):
-        sys.stdout.write("=> curret: %s\n" % (self.q_t[0] or {}) +\
-                         "=> next:   %s\n" % (self.q_t[1] or {}))
+        sys.stdout.write("=> curret: %s\n" % (self.syntax_stack[0] or {}) +\
+                         "=> next:   %s\n" % (self.syntax_stack[1] or {}))
 
     def __reset_stack(self):
+        self.syntax_stack.clear()
+        self.syntax_heap = []
         self.code = None
-        self.q_b = []

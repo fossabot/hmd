@@ -33,14 +33,13 @@ class HMDSchema(object):
         if not line: return
         if all([ x in line for x in ('$', '=') ]):
             self.definition = line
-            return True
         else:
             tokens = line.split('\t')
             if len(tokens) < 2: return
-            self.category = tokens[:-1]
-            self.definition = tokens[-1]
-            return True
-        return
+            self.category, self.definition = [
+                tokens[:-1],
+                tokens[-1]]
+        return True
 
     def unpack(self):
         ''' unpack schema into line.

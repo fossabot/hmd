@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 
 from src.abstract.automata.automata import AbstractAutomataMachine
-from src.abstract.parser.parser import AbstractParser
-from src.abstract.lexer.token import AbstractToken
 from src.abstract.lexer.lexer import AbstractLexer
+from src.abstract.lexer.token import AbstractToken
+from src.abstract.parser.parser import AbstractParser
 from src.mindslab.grammar import HMDGrammar
 from src.mindslab.syntax import *
 
@@ -180,8 +180,20 @@ class TestParser(unittest.TestCase):
         attempt = self.parser.parse(tokens)
         self.assertFalse(attempt)
 
+    def test_parser_invalid_syntax_not_space_between(self):
+        hmd = '! '
+        tokens = self.lexer.lex(hmd)
+        attempt = self.parser.parse(tokens)
+        self.assertFalse(attempt)
+
     def test_parser_invalid_syntax_nots(self):
         hmd = '!!'
+        tokens = self.lexer.lex(hmd)
+        attempt = self.parser.parse(tokens)
+        self.assertFalse(attempt)
+
+    def test_parser_invalid_syntax_nots_space_between(self):
+        hmd = '! !'
         tokens = self.lexer.lex(hmd)
         attempt = self.parser.parse(tokens)
         self.assertFalse(attempt)
@@ -218,6 +230,12 @@ class TestParser(unittest.TestCase):
 
     def test_parser_invalid_syntax_hats(self):
         hmd = '^^'
+        tokens = self.lexer.lex(hmd)
+        attempt = self.parser.parse(tokens)
+        self.assertFalse(attempt)
+
+    def test_parser_invalid_syntax_hat_space_between(self):
+        hmd = '^ 1'
         tokens = self.lexer.lex(hmd)
         attempt = self.parser.parse(tokens)
         self.assertFalse(attempt)
@@ -362,6 +380,12 @@ class TestParser(unittest.TestCase):
 
     def test_parser_invalid_syntax_assignments(self):
         hmd = '=='
+        tokens = self.lexer.lex(hmd)
+        attempt = self.parser.parse(tokens)
+        self.assertFalse(attempt)
+
+    def test_parser_invalid_syntax_not_assignments(self):
+        hmd = '!='
         tokens = self.lexer.lex(hmd)
         attempt = self.parser.parse(tokens)
         self.assertFalse(attempt)

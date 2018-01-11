@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
-from src.abstract.lexer.token import AbstractToken
 from src.abstract.lexer.lexer import AbstractLexer
+from src.abstract.lexer.token import AbstractToken
 
 import unittest
 

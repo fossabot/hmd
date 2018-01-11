@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
-from src.abstract.automata.automata import AbstractAutomata, AbstractAutomataMachine
+from src.abstract.automata.automata import AbstractAutomata
+from src.abstract.automata.automata import AbstractAutomataMachine
 
 import unittest
 

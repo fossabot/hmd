@@ -18,14 +18,7 @@ class HMDSchema(object):
     '''
 
     def __init__(self):
-        self.category = None
-        self.definition = None
-
-    def view(self):
-        ''' view schema.
-        '''
-        return (self.category,
-                self.definition)
+        self.category = self.definition = None
 
     def pack(self, line=''):
         ''' pack line into schema.
@@ -39,16 +32,6 @@ class HMDSchema(object):
             self.category, self.definition = [
                 tokens[:-1],
                 tokens[-1]]
-        return True
-
-    def unpack(self):
-        ''' unpack schema into line.
-        '''
-        try: line = '\t'.join(self.category, self.definition)
-        except:
-            debug('w', 'incorrect schema structure => defaulting to empty schema.\n')
-            line = ''
-        return line
 
 class HMDGenerator(AbstractGenerator):
     ''' default hierarchial multiple dictionary generator.
@@ -147,9 +130,11 @@ class HMDGenerator(AbstractGenerator):
         + category {list} -- a list of category.
         + definition {list} -- definition.
         '''
-        try: blocks = definition[1:-1].split(')(')
-        except IndexError: blocks = []
-        if not blocks: return blocks
+        try:
+            blocks = definition[1:-1].split(')(')
+            assert bool(blocks)
+        except AssertionError: raise
+        except IndexError: raise
 
         # tokenize into sets and also remember their index
         s_p, s_q = [], []

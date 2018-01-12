@@ -32,6 +32,7 @@ class HMDSchema(object):
             self.category, self.definition = [
                 tokens[:-1],
                 tokens[-1]]
+        return bool(self.definition)
 
 class HMDGenerator(AbstractGenerator):
     ''' default hierarchial multiple dictionary generator.
@@ -80,7 +81,7 @@ class HMDGenerator(AbstractGenerator):
         for hmd in self.hmd:
             schema = HMDSchema()
             if not schema.pack(hmd):
-                debug('w', "GENERATOR: cannot create schema: '%s'.\n" % hmd)
+                debug('w', "[GENERATOR] cannot create schema: '%s'\n" % hmd)
                 pass # disregard the unpackable format and continue
             else: schemas.append(schema)
 
@@ -106,7 +107,7 @@ class HMDGenerator(AbstractGenerator):
             if self.hmd_unique: self.hmd = list(set(self.hmd)) # unique
             if self.hmd_sorted: self.hmd.sort() # sort
         except:
-            debug('w', 'GENERATOR: unable to initialize hmd.\n')
+            debug('w', '[GENERATOR] unable to initialize hmd\n')
             sys.exit(1)
 
     def __remove_comments(self):
@@ -160,7 +161,7 @@ class HMDGenerator(AbstractGenerator):
                     stack = sorted(s_q + [tuple(pairable)]) # restore order
                     permutation.append([category, '(%s)' % ')('.join(map(lambda x:x[1], stack))])
             except:
-                debug('w', 'GENERATOR: failed to pair categories and definitions.\n')
+                debug('w', '[GENERATOR] failed to pair categories and definitions\n')
                 permutation = []
 
         # there is no product
@@ -174,7 +175,7 @@ class HMDGenerator(AbstractGenerator):
         '''
         try: assert bool(categories) and len(categories) == len(definitions)
         except AssertionError:
-            debug('w', 'GENERATOR: merging not possible:\n')
+            debug('w', '[GENERATOR] merging not possible:\n')
             debug('d', 'category   -> %i\n' % len(categories))
             debug('d', 'definition -> %i\n' % len(definitions))
             sys.exit(1)

@@ -2,7 +2,7 @@
 
 # hmd
 
-**hmd** is the next-generation Hierarchial Multiple Dictionary (HMD) compiler.
+**hmd** is the next-generation Hierarchial Multiple Dictionary (HMD) compiler, pattern matching, text traversal engine.
 
 ## Features
 
@@ -30,7 +30,11 @@ See [syntax](./docs/SYNTAX.md) or some [examples](./docs/EXAMPLE.md).
 
 ## Design
 
-**hmd** is a modified compiler, which has similarities to conventional compilers. All user input goes into `FACTORY`, a singleton-wrapper instance that spawns and dies with the program's lifetime, and outputs as compiled matrix:
+**hmd** is a monolith engine for compiling and pattern matching texts with HMD syntax.
+
+### Compiler
+
+The modified compiler component has similarities to conventional compilers. All user input goes into `FACTORY`, a singleton-wrapper instance that spawns and dies with the program's lifetime, and outputs as compiled matrix:
 
 ![](https://hmd.surge.sh/design.png)
 
@@ -45,6 +49,8 @@ Since the syntax of Hierarchial Multiple Dictionary (HMD) does not resemble that
 ![](https://hmd.surge.sh/shuntingyard.svg)
 
 `GENERATOR` is an overridable class that can be defined with custom compiling implementations.
+
+### Pattern Matching and Text Traversal Engine
 
 ## License
 

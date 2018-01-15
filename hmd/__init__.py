@@ -7,7 +7,7 @@ __all__ = [
     '__version__']
 
 __program__ = 'hmd'
-__version__ = '2.0.0'
+__version__ = '2.0.1'
 __license__ = 'MIT'
 
 __logo__ = r'''

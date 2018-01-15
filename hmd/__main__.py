@@ -1,19 +1,21 @@
 #!/usr/bin/env python
 
 from __future__ import absolute_import
+from errno import ENOENT
 
-import errno
 import os
 import sys
-import time
+
+from __init__ import *
 
 try:
-    from __init__ import *
     from src.abstract.automata.automata import AbstractAutomata
     from src.abstract.automata.automata import AbstractAutomataMachine
     from src.abstract.generator.generator import AbstractGenerator
     from src.abstract.lexer.lexer import AbstractLexer
     from src.abstract.lexer.token import AbstractToken
+    from src.abstract.matcher.bsearch import bSearchMatcher
+    from src.abstract.matcher.bsearch import bSearchPreprocessor
     from src.abstract.parser.parser import AbstractParser
     from src.debug import *
     from src.mindslab.generator import HMDGenerator
@@ -137,7 +139,7 @@ if __name__ == '__main__':
         elif args.f:
             if not os.path.isfile(args.f):
                 debug('w', "file '%s' does not exist.\n" % args.f)
-                sys.exit(errno.ENOENT)
+                sys.exit(ENOENT)
             with open(args.f) as f:
                 c = f.read().split('\n')
                 result = generator.generate(c)

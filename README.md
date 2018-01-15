@@ -32,7 +32,7 @@ See [syntax](./docs/SYNTAX.md) or some [examples](./docs/EXAMPLE.md).
 
 **hmd** is a monolith engine that contains HMD compiler and pattern matching engine.
 
-### Compiler
+### i. Compiler
 
 The modified compiler component has similarities to conventional compilers. All user input goes into `FACTORY`, a singleton-wrapper instance that spawns and dies with the program's lifetime, and outputs as compiled matrix:
 
@@ -50,7 +50,9 @@ Since the syntax of Hierarchial Multiple Dictionary (HMD) does not resemble that
 
 `GENERATOR` is an overridable class that can be defined with custom compiling implementations.
 
-### Pattern Matching and Text Traversal Engine
+### ii. Pattern Matching and Text Traversal Engine
+
+TODO
 
 ## License
 

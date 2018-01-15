@@ -2,7 +2,7 @@
 
 # hmd
 
-**hmd** is the next-generation Hierarchial Multiple Dictionary (HMD) compiler, pattern matching, and text traversal engine.
+**hmd** is the next-generation Hierarchial Multiple Dictionary (HMD) compiler, pattern matching, and text traversal engine. It's designed to be a monolith construct in order to provide a simpler interface during [import](https://docs.python.org/3/reference/import.html) as a module.
 
 ## Features
 
@@ -30,23 +30,27 @@ See [syntax](./docs/SYNTAX.md) or some [examples](./docs/EXAMPLE.md).
 
 ## Design
 
-**hmd** is a monolith engine that contains HMD compiler and pattern matching engine.
-
 ### i. Compiler
 
-The modified compiler component has similarities to conventional compilers. All user input goes into `FACTORY`, a singleton-wrapper instance that spawns and dies with the program's lifetime, and outputs as compiled matrix:
+The modified compiler component has similarities to a conventional compiler. A text goes into `FACTORY` class, a singleton-wrapper instance that spawns and dies within the program's lifetime, and outputs as a matrix:
 
-![](./docs/images/design.png)
+<p align="center">
+  <img src="./docs/images/design.png">
+</p>
 
-By default, `LEXER` will only tokenize a string into primitive characters, numbers, and symbols. If a user provides custom rules (as [regular expression](https://wikipedia.org/wiki/Regular_expression)), it will use that instead.
+By default, `LEXER` will only tokenize a string into primitive characters, numbers, and symbols. If a user provides custom rules as a [regular expression](https://wikipedia.org/wiki/Regular_expression), it will use that instead.
 
 Since the syntax of Hierarchial Multiple Dictionary (HMD) does not resemble that of a conventional programming language, custom language grammar was defined as inheritable abstractions of [deterministic finite automata](https://wikipedia.org/wiki/Deterministic_finite_automaton):
 
-![](./docs/images/automata.png)
+<p align="center">
+  <img src="./docs/images/automata.png" height="230px">
+</p>
 
 `PARSER` also uses similar technique as the [Shunting Yard algorithm](https://wikipedia.org/wiki/Shunting-yard_algorithm) to split the operator and scalar values. However, it has heavily modified the algorithm to accomodate variables and comments:
 
-![](./docs/images/shuntingyard.svg)
+<p align="center">
+  <img src="./docs/images/shuntingyard.svg" height="600px">
+</p>
 
 `GENERATOR` is an overridable class that can be defined with custom compiling implementations.
 

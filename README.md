@@ -2,7 +2,7 @@
 
 # hmd
 
-**hmd** is the next-generation Hierarchial Multiple Dictionary (HMD) compiler, pattern matching, text traversal engine.
+**hmd** is the next-generation Hierarchial Multiple Dictionary (HMD) compiler, pattern matching, and text traversal engine.
 
 ## Features
 
@@ -30,23 +30,23 @@ See [syntax](./docs/SYNTAX.md) or some [examples](./docs/EXAMPLE.md).
 
 ## Design
 
-**hmd** is a monolith engine for compiling and pattern matching texts with HMD syntax.
+**hmd** is a monolith engine that contains HMD compiler and pattern matching engine.
 
 ### Compiler
 
 The modified compiler component has similarities to conventional compilers. All user input goes into `FACTORY`, a singleton-wrapper instance that spawns and dies with the program's lifetime, and outputs as compiled matrix:
 
-![](https://hmd.surge.sh/design.png)
+![](./docs/images/design.png)
 
 By default, `LEXER` will only tokenize a string into primitive characters, numbers, and symbols. If a user provides custom rules (as [regular expression](https://wikipedia.org/wiki/Regular_expression)), it will use that instead.
 
 Since the syntax of Hierarchial Multiple Dictionary (HMD) does not resemble that of a conventional programming language, custom language grammar was defined as inheritable abstractions of [deterministic finite automata](https://wikipedia.org/wiki/Deterministic_finite_automaton):
 
-![](https://hmd.surge.sh/automata.png)
+![](./docs/images/automata.png)
 
 `PARSER` also uses similar technique as the [Shunting Yard algorithm](https://wikipedia.org/wiki/Shunting-yard_algorithm) to split the operator and scalar values. However, it has heavily modified the algorithm to accomodate variables and comments:
 
-![](https://hmd.surge.sh/shuntingyard.svg)
+![](./docs/images/shuntingyard.svg)
 
 `GENERATOR` is an overridable class that can be defined with custom compiling implementations.
 

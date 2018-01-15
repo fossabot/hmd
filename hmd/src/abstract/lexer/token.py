@@ -2,16 +2,22 @@
 
 class AbstractToken(object):
     ''' an abstract token.
-    params:
-      + value {str} -- tokenized value.
-      + type {str} -- token type.
-      + x {int} -- x-coordinate of value.
-      + y {int} -- y-coordinate of value.
     '''
 
-    def __init__(self, value=None, type=None, x=-1, y=-1):
-        self.value = value
+    def __init__(self,
+                 value=None,
+                 type=None,
+                 x=-1,
+                 y=-1):
+        '''
+        params:
+          + value {str} -- tokenized value.
+          + type {str} -- token type.
+          + x {int} -- x-coordinate of value.
+          + y {int} -- y-coordinate of value.
+        '''
         self.type = type
+        self.value = value
         self.x = x
         self.y = y
 

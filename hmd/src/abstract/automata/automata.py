@@ -2,24 +2,33 @@
 
 class AbstractAutomata(object):
     ''' an abstract automata that stores state, transition(s), start and end state.
-    params:
-      + state {str} -- a state
-      + transition {list} -- transition from a state to another state
-      + basetype {str} -- first-generation primitive type
-      + start {bool} -- initial/starting state (q_0)
-      + final {bool} -- final/accepting state (q_f)
     '''
+
+    __slots__ = ['basetype',
+                 'final',
+                 'start',
+                 'state',
+                 'transition']
+
     def __init__(self,
                  state='',
                  transition=[],
                  basetype='',
                  start=False,
                  final=False):
+        '''
+        params:
+          + state {str} -- a state
+          + transition {list} -- transition from a state to another state
+          + basetype {str} -- first-generation primitive type
+          + start {bool} -- initial/starting state (q_0)
+          + final {bool} -- final/accepting state (q_f)
+        '''
+        self.basetype = basetype
+        self.final = final
+        self.start = start
         self.state = state
         self.transition = transition
-        self.basetype = basetype
-        self.start = start
-        self.final = final
 
 class AbstractAutomataMachine(object):
     ''' an abstract machine that stores automata.

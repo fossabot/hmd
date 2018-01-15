@@ -10,11 +10,13 @@ import sys
 
 class AbstractParser(object):
     ''' an abstract parser to convert tokens into build instruction code.
-    params:
-      + grammar {AbstractAutomataMachine} -- grammar to check and parse tokens.
     '''
 
     def __init__(self, grammar):
+        '''
+        params:
+          + grammar {AbstractAutomataMachine} -- grammar to check and parse tokens.
+        '''
 
         # grammar
         self.grammar = grammar.get_automata()
@@ -39,7 +41,7 @@ class AbstractParser(object):
           + tokens {list|list[list]} -- list or nested lists of tokens from lexer.
         '''
         if not tokens: return []
-        if not all(map(lambda token:isinstance(token, list), tokens)):
+        if all(map(lambda token:not isinstance(token, list), tokens)):
             self.__evaluate(tokens) # tokens
         else: [ self.__evaluate(token) for token in tokens ] # nested tokens
         return self.code

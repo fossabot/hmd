@@ -5,22 +5,21 @@ from src.debug import *
 
 from os import path
 from re import match
-import errno
-import sys
 
 class AbstractLexer(object):
     ''' an abstract lexicographic analyzer that tokenizes a text using input grammar (regex).
-    params:
-      + rules {dict} -- custom dictionary of regex to lexical analyze.
     '''
 
     def __init__(self, rules={}):
+        '''
+        params:
+          + rules {dict} -- custom dictionary of regex to lexical analyze.
+        '''
         self.rules = rules or { # default
             'SYMBOL': r'[^A-Za-z\d\s]+',
             'STRING': r'[A-Za-z]+',
             'NUMBER': r'[\d]+',
-            'SPACE': r'[ ]+'
-        }
+            'SPACE': r'[ ]+'}
 
     #
     # public

@@ -1,9 +1,8 @@
 #!/usr/bin/env python
-#
-# TODO
-#
 
 class bSearchPreprocessor(object):
+    ''' an bucket-search algorithm pre-processor implementation.
+    '''
 
     __slots__ = ['valid_text']
 

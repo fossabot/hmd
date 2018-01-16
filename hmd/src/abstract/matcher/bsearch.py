@@ -70,6 +70,8 @@ class bSearchMatcher(object):
     #
 
     def __optimized_basic_match(self, search_terms=[]):
+        '''
+        '''
         if not search_terms: return
 
         return

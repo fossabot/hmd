@@ -23,6 +23,7 @@ try:
     from src.mindslab.grammar import HMDGrammar
     from src.mindslab.syntax import *
     from tests.test_automata import TestAutomata
+    from tests.test_bsearch import TestbSearch
     from tests.test_lexer import TestLexer
     from tests.test_parser import TestParser
     import argparse
@@ -120,9 +121,10 @@ if __name__ == '__main__':
         # self-test
         if args.test:
             test_suites, test_cases = [], (
+                TestAutomata,
                 TestLexer,
                 TestParser,
-                TestAutomata
+                TestbSearch
             )
             for test_case in test_cases:
                 test_suite = unittest.TestLoader().loadTestsFromTestCase(test_case)

@@ -4,7 +4,7 @@ Below are some examples of new HMD features:
 
 ## Schema
 
-There can be arbitrary number of categories. However, you can [declare a limit](https://github.com/initbar/hmdc/blob/388fb0b30b0b452351efcba762ba27b9aceead81/hmdc/__main__.py#L78-L85) and manually override the total category number:
+There can be arbitrary number of categories. However, you can [declare a limit](https://github.com/initbar/hmd/blob/388fb0b30b0b452351efcba762ba27b9aceead81/hmd/__main__.py#L78-L85) and manually override the total category number:
 
 ```
 (category)  ..  (category)	(definition)
@@ -47,7 +47,7 @@ M N	$x$x
 O P	$x$y$z
 ```
 
-You don't need to declare everything on the top. **hmdc** is flexible that you can declare variables on-the-go:
+You don't need to declare everything on the top. **hmd** is flexible that you can declare variables on-the-go:
 
 ```bash
 $x= (a)
@@ -85,7 +85,7 @@ A	A	(a)
 
 ## Sorting
 
-If rules are not organized, you can set **hmdc** to sort the output result using [sort](https://github.com/initbar/hmdc/blob/388fb0b30b0b452351efcba762ba27b9aceead81/hmdc/__main__.py#L87-L91) flag:
+If rules are not organized, you can set **hmd** to sort the output result using [sort](https://github.com/initbar/hmd/blob/388fb0b30b0b452351efcba762ba27b9aceead81/hmd/__main__.py#L87-L91) flag:
 
 ```bash
 # before
@@ -115,7 +115,7 @@ B	(a)(b)(x|y|z)
 
 ## Unique
 
-If you accidentally copy-and-paste identical rules, you can set **hmdc** to de-dup the results using [unique](https://github.com/initbar/hmdc/blob/388fb0b30b0b452351efcba762ba27b9aceead81/hmdc/__main__.py#L93-L97) flag:
+If you accidentally copy-and-paste identical rules, you can set **hmd** to de-dup the results using [unique](https://github.com/initbar/hmd/blob/388fb0b30b0b452351efcba762ba27b9aceead81/hmd/__main__.py#L93-L97) flag:
 
 ```bash
 # before

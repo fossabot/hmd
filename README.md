@@ -1,6 +1,8 @@
 [![Build Status](https://travis-ci.org/initbar/hmd.svg?branch=master)](https://travis-ci.org/initbar/hmd)
 
-# hmd
+<p align="center">
+  <img src="./docs/images/logo.png">
+</p>
 
 **hmd** is the next-generation Hierarchial Multiple Dictionary (HMD) compiler, pattern matching, and text traversal engine. It's designed to be a monolith construct in order to provide a simpler interface during [import](https://docs.python.org/3/reference/import.html) as a module.
 

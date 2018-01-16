@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 class bSearchPreprocessor(object):
-    ''' an bucket-search algorithm pre-processor implementation.
+    ''' custom b-search algorithm pre-processor.
     '''
 
     __slots__ = ['valid_text']
@@ -44,6 +44,8 @@ class bSearchPreprocessor(object):
         return ' '.join(self.valid_text.findall(_))
 
 class bSearchMatcher(object):
+    ''' custom b-search algorithm matcher.
+    '''
 
     __slots__ = ['bucket']
 

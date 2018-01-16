@@ -22,46 +22,43 @@ class TestbSearch(unittest.TestCase):
 
     def test_bsearch_preprocessor_clean_normal_alpha(self):
         text = 'a bc def ghij klmno pqrstu vwxy z'
-        self.assertEquals(self.bp._bSearchPreprocessor__clean(text),
-                          text)
+        self.assertEquals(self.bp._bSearchPreprocessor__clean(text), text)
 
     def test_bsearch_preprocessor_clean_normal_alphanumeric(self):
         text = 'a bc def ghij klmno pqrstu vwxy z 1234 5 6 z7 a8 90'
-        self.assertEquals(self.bp._bSearchPreprocessor__clean(text),
-                          text)
+        self.assertEquals(self.bp._bSearchPreprocessor__clean(text), text)
 
     def test_bsearch_preprocessor_clean_trim_alphanumeric(self):
         text = ' a bc def ghij klmno pqrstu vwxy z 1234 5 6 z7 a8 90 '
-        self.assertEquals(self.bp._bSearchPreprocessor__clean(text),
-                          text.strip())
+        self.assertEquals(self.bp._bSearchPreprocessor__clean(text), text.strip())
 
     def test_bsearch_preprocessor_clean_ltrim_alphanumeric(self):
         text = ' a bc def ghij klmno pqrstu vwxy z 1234 5 6 z7 a8 90'
-        self.assertEquals(self.bp._bSearchPreprocessor__clean(text),
-                          text.lstrip())
+        self.assertEquals(self.bp._bSearchPreprocessor__clean(text), text.lstrip())
 
     def test_bsearch_preprocessor_clean_rtrim_alphanumeric(self):
         text = 'a bc def ghij klmno pqrstu vwxy z 1234 5 6 z7 a8 90 '
-        self.assertEquals(self.bp._bSearchPreprocessor__clean(text),
-                          text.rstrip())
+        self.assertEquals(self.bp._bSearchPreprocessor__clean(text), text.rstrip())
 
     def test_bsearch_preprocessor_clean_dirty_1(self):
         attempt = 'a#b$0~1 '
         answer = 'a b 0 1'
-        self.assertEquals(self.bp._bSearchPreprocessor__clean(attempt),
-                          answer)
+        self.assertEquals(self.bp._bSearchPreprocessor__clean(attempt), answer)
 
     def test_bsearch_preprocessor_clean_dirty_2(self):
         attempt = '     aaa#bbbbb$0~1 2+   '
         answer = 'aaa bbbbb 0 1 2'
-        self.assertEquals(self.bp._bSearchPreprocessor__clean(attempt),
-                          answer)
+        self.assertEquals(self.bp._bSearchPreprocessor__clean(attempt), answer)
 
     def test_bsearch_preprocessor_clean_dirty_3(self):
         attempt = '~!@#$%^&*()_+'
         answer = ''
-        self.assertEquals(self.bp._bSearchPreprocessor__clean(attempt),
-                          answer)
+        self.assertEquals(self.bp._bSearchPreprocessor__clean(attempt), answer)
+
+    def test_bsearch_preprocessor_clean_dirty_4(self):
+        attempt = '~!@#$%^&*()_+1a'
+        answer = '1a'
+        self.assertEquals(self.bp._bSearchPreprocessor__clean(attempt), answer)
 
     #
     # matcher

@@ -1,6 +1,8 @@
-[![Build Status](https://travis-ci.org/initbar/hmd.svg?branch=master)](https://travis-ci.org/initbar/hmd)
-
 <p align="center">
+  <a href="https://travis-ci.org/initbar/hmd">
+    <img src="https://travis-ci.org/initbar/hmd.svg?branch=master">
+  </a>
+  <br>
   <img src="./docs/images/logo.png">
 </p>
 
@@ -48,7 +50,7 @@ Since the syntax of Hierarchial Multiple Dictionary (HMD) does not resemble that
 
 <img src="./docs/images/shuntingyard.svg" height="600px">
 
-`GENERATOR` is an overridable class that can be defined with custom compiling implementations.
+`GENERATOR` is an overridable class that can be defined with custom compiling implementations. By itself, it's an empty class.
 
 ### ii. Pattern Matching and Text Traversal Engine
 

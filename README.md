@@ -29,7 +29,7 @@
 
 ## Module
 
-When importing, use absolte imports directly from the base `hmd` repository:
+When importing, use absolte imports directly from the base repository:
 
 ```python
 import hmd.src.abstract.automata.automata
@@ -37,7 +37,7 @@ import hmd.src.abstract.generator.generator
 # ..
 ```
 
-If you're importing from the binary builds, use `zipimporter` module.
+If you're importing from the binary builds, use [zipimport](https://docs.python.org/2/library/zipimport.html) module.
 
 ## Documentations
 

@@ -7,7 +7,7 @@ import unittest
 
 class TestbSearch(unittest.TestCase):
     '''
-    : unit tests for automata class.
+    : unit tests for b-search algorithm.
     '''
 
     bp = bSearchPreprocessor()
@@ -17,7 +17,7 @@ class TestbSearch(unittest.TestCase):
     # pre-processor
     #
 
-    def test_bsearch_preprocessor_type(self):
+    def test_bsearch_preprocessor_inherited_type(self):
         self.assertTrue(isinstance(self.bp, bSearchPreprocessor))
 
     def test_bsearch_preprocessor_clean_normal_alpha(self):
@@ -45,9 +45,27 @@ class TestbSearch(unittest.TestCase):
         self.assertEquals(self.bp._bSearchPreprocessor__clean(text),
                           text.rstrip())
 
+    def test_bsearch_preprocessor_clean_dirty_1(self):
+        attempt = 'a#b$0~1 '
+        answer = 'a b 0 1'
+        self.assertEquals(self.bp._bSearchPreprocessor__clean(attempt),
+                          answer)
+
+    def test_bsearch_preprocessor_clean_dirty_2(self):
+        attempt = '     aaa#bbbbb$0~1 2+   '
+        answer = 'aaa bbbbb 0 1 2'
+        self.assertEquals(self.bp._bSearchPreprocessor__clean(attempt),
+                          answer)
+
+    def test_bsearch_preprocessor_clean_dirty_3(self):
+        attempt = '~!@#$%^&*()_+'
+        answer = ''
+        self.assertEquals(self.bp._bSearchPreprocessor__clean(attempt),
+                          answer)
+
     #
     # matcher
     #
 
-    def test_bsearch_match_type(self):
+    def test_bsearch_match_inherited_type(self):
         self.assertTrue(isinstance(self.bm, bSearchMatcher))

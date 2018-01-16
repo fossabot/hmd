@@ -1,6 +1,6 @@
 # Design
 
-There are two major components to the **hmd** code: compiler and matcher:
+There are two major components to the **hmd** code: [compiler](#i-compiler) and [matcher](#ii-pattern-matching-and-text-traversal-engine).
 
 ## i. Compiler
 

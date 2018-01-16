@@ -28,6 +28,18 @@
 ~$ ./hmd -h
 ```
 
+## Module
+
+When importing, use absolte imports directly from the base `hmd` repository:
+
+```python
+import hmd.src.abstract.automata.automata
+import hmd.src.abstract.generator.generator
+# ..
+```
+
+If you're importing from the binary builds, use `zipimporter` module.
+
 ## Documentations
 
 See [syntax](./docs/SYNTAX.md) or some [examples](./docs/EXAMPLE.md).

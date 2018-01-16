@@ -41,11 +41,7 @@ If you're importing from the binary builds, use [zipimport](https://docs.python.
 
 ## Documentations
 
-See [syntax](./docs/SYNTAX.md) or some [examples](./docs/EXAMPLE.md).
-
-## Design
-
-See [design](./docs/DESIGN.md).
+See [syntax](./docs/SYNTAX.md), some [examples](./docs/EXAMPLE.md), or [design](./docs/DESIGN.md).
 
 ## License
 

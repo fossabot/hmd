@@ -14,7 +14,6 @@
 - Backward-compatible with the older version **hmd_split.py**.
 - Optimized to sort and de-duplicate listed keywords in results (".matrix").
 - Optimized to sort and de-duplicate listed rules in results (".matrix").
-- Convert dictionary terms into lemma using NLP engine.
 - Check dictionary syntax during parsing stage.
 - Support variables to store repeated strings.
 - Syntax highlighting for definitions.

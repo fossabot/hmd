@@ -21,7 +21,7 @@ def debug(category='', message=''):
     # create template
     timestamp = '%s[%s]%s' % (c_w, time.asctime(), rst)
     template = ' '.join([timestamp, '%s[%s%s%s] %s'])
-    category = category.lower().strip()
+    category = category.strip().lower()
 
     # INFO
     if category in ['i', 'info']:

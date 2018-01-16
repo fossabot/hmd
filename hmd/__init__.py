@@ -17,7 +17,7 @@ __logo__ = r'''
  | | | | | | | | | (_| |
  |_| |_|_| |_| |_|\__,_|
 
- Hierarchial Multiple Dictionary (v%s)
- https://git.io/v5EWW
+ Hierarchial Multiple Dictionary
+ ver: v%s-{git.io/vNWbM}
 
 ''' % __version__

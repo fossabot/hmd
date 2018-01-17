@@ -59,6 +59,7 @@ class bSearchMatcher(object):
 
     def match(self, search_terms=[]):
         if not search_terms: return
+        # check for optimized search
         for term in search_terms:
             size = term.__len__()
             res = self.bucket.get(size)
@@ -74,6 +75,8 @@ class bSearchMatcher(object):
     def __optimized_basic_match(self, search_terms=[]):
         '''
         '''
-        if not search_terms: return
-
-        return
+        try: _ = [ self.bucket.get(term.__len__()).values()
+                   for term in search_terms ]
+        except AttributeError: return
+        return all([ term in _[i]
+                     for i, term in enumerate(search_terms) ])

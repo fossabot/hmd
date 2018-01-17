@@ -60,6 +60,22 @@ class bSearchMatcher(object):
     # public
     #
 
+    def get_bucket(self):
+        return self.bucket
+
+    def get_basket(self):
+        return self.basket
+
+    def load_bucket(self, bucket):
+        if bucket and isinstance(bucket, list):
+            self.bucket = bucket
+        return self.bucket == bucket
+
+    def load_basket(self, basket):
+        if basket and isinstance(basket, list):
+            self.basket = basket
+        return self.basket == basket
+
     def match(self, search_terms=[]):
         if not search_terms: return
         # check for optimized search

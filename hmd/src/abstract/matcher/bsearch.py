@@ -47,11 +47,14 @@ class bSearchMatcher(object):
     ''' custom b-search algorithm matcher.
     '''
 
-    __slots__ = ['bucket']
+    __slots__ = ['bucket', 'basket']
 
-    def __init__(self, bucket=[]):
+    def __init__(self,
+                 bucket=[],
+                 basket=[]):
         import ast # lazy load
         self.bucket = bucket
+        self.basket = basket
 
     #
     # public
@@ -79,4 +82,6 @@ class bSearchMatcher(object):
                    for term in search_terms ]
         except AttributeError: return
         return all([ term in _[i]
+                     if not set(_[i]).intersection(set(self.basket))
+                     else False
                      for i, term in enumerate(search_terms) ])

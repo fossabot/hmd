@@ -24,3 +24,4 @@ script:
 - make
 - cd ./build
 - ./hmd -t
+- python setup.py sdist

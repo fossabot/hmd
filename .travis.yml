@@ -19,9 +19,9 @@ branches:
   - master
 
 script:
+- python setup.py sdist
 - make test
 - make clean
 - make
 - cd ./build
 - ./hmd -t
-- python setup.py sdist

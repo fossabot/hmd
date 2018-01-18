@@ -72,3 +72,9 @@ class TestbSearch(unittest.TestCase):
         search = 'hello$herbert'.split('$')
         bm = bSearchMatcher(self.bp.parse(text))
         self.assertTrue(bm.match(search))
+
+    def test_bsearch_mismatch_basic_match(self):
+        text = 'hello$world$i$am$herbert'
+        search = 'hello$herberts'.split('$')
+        bm = bSearchMatcher(self.bp.parse(text))
+        self.assertFalse(bm.match(search))

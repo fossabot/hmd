@@ -12,8 +12,8 @@
 
 - Modular to support additional syntax and definitions.
 - Backward-compatible with the older version **hmd_split.py**.
-- Optimized to sort and de-duplicate listed keywords in results (".matrix").
-- Optimized to sort and de-duplicate listed rules in results (".matrix").
+- Optimized to sort and de-duplicate listed keywords in matrix.
+- Optimized to sort and de-duplicate listed rules in matrix.
 - Check dictionary syntax during parsing stage.
 - Support variables to store repeated strings.
 - Syntax highlighting for definitions.
@@ -39,7 +39,7 @@ import hmd.src.abstract.generator.generator
 
 If you're directly importing the binary builds, then use [zipimport](https://docs.python.org/2/library/zipimport.html) module.
 
-Or, you can directly install **hmd** using [pip](https://pypi.org).
+Or, you can also install **hmd** as package using [pip](https://pypi.org).
 
 ## Documentations
 

@@ -1,8 +1,23 @@
 from setuptools import setup
 
 setup(
+    author='Herbert <initbar> Shin',
+    author_email='noreply@init.bar',
+    description="Hierarchial Multiple Dictionary",
+    license='MIT',
+    long_description='hmd is the next-generation Hierarchial Multiple Dictionary (HMD) compiler, pattern matching, and text traversal engine.',
     name='hmd',
-    version='2.0.1',
+    scripts=['hmd'],
     url="https://github.com/initbar/hmd",
-    scripts=['hmd']
+    version='2.0.1',
+    keywords=' '.join([
+        'automata',
+        'compiler',
+        'grammar',
+        'hmd',
+        'lexer',
+        'matrix',
+        'optimization',
+        'python'
+    ])
 )

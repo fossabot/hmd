@@ -39,6 +39,8 @@ import hmd.src.abstract.generator.generator
 
 If you're directly importing the binary builds, then use [zipimport](https://docs.python.org/2/library/zipimport.html) module.
 
+Or, you can directly install **hmd** using [pip](https://pypi.org).
+
 ## Documentations
 
 See [syntax](./docs/SYNTAX.md), some [examples](./docs/EXAMPLE.md), or [design](./docs/DESIGN.md).

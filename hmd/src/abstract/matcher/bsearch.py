@@ -8,7 +8,7 @@ class bSearchPreprocessor(object):
 
     def __init__(self):
         import re # lazy load
-        self.valid_text = re.compile('[A-Za-z0-9]+')
+        self.valid_text = re.compile('[^\W_]+')
 
     #
     # public
@@ -47,12 +47,13 @@ class bSearchMatcher(object):
     ''' custom b-search algorithm matcher.
     '''
 
-    __slots__ = ['bucket', 'basket']
-
     def __init__(self,
                  bucket=[],
                  basket=[]):
-        import ast # lazy load
+        # lazy load
+        import ast
+        import re
+        self.valid_text = re.compile('[^\W_]+')
         self.bucket = bucket
         self.basket = basket
 
@@ -78,7 +79,12 @@ class bSearchMatcher(object):
 
     def match(self, search_terms=[]):
         if not search_terms: return
+
         # check for optimized search
+        if all(map(lambda x:self.valid_text.match(x), search_terms)):
+            return self.__optimized_basic_match(search_terms)
+
+        # non-optimized search
         for term in search_terms:
             size = term.__len__()
             res = self.bucket.get(size)

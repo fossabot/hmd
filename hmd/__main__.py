@@ -129,7 +129,7 @@ if __name__ == '__main__':
             for test_case in test_cases:
                 test_suite = unittest.TestLoader().loadTestsFromTestCase(test_case)
                 test_suites.append(test_suite)
-            sys.stdout = sys.stderr = open(os.devnull, 'wb') # /dev/null
+            # sys.stdout = sys.stderr = open(os.devnull, 'wb') # /dev/null
             result = unittest.TextTestRunner(verbosity=2).run(unittest.TestSuite(test_suites))
             sys.exit(not result.wasSuccessful())
 

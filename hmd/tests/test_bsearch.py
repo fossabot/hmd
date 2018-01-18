@@ -66,3 +66,9 @@ class TestbSearch(unittest.TestCase):
 
     def test_bsearch_match_inherited_type(self):
         self.assertTrue(isinstance(self.bm, bSearchMatcher))
+
+    def test_bsearch_match_basic_match(self):
+        text = 'hello$world$i$am$herbert'
+        search = 'hello$herbert'.split('$')
+        bm = bSearchMatcher(self.bp.parse(text))
+        self.assertTrue(bm.match(search))

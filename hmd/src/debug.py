@@ -20,7 +20,7 @@ def debug(category='', message=''):
 
     # create template
     timestamp = '%s[%s]%s' % (c_w, time.asctime(), rst)
-    template = ' '.join([timestamp, '%s[%s%s%s] %s'])
+    template = ' '.join([timestamp, '%s[%s%s%s] %s', rst])
     category = category.strip().lower()
 
     # INFO

@@ -1,8 +1,5 @@
+[![Build Status](https://travis-ci.org/initbar/hmd.svg?branch=master)](https://travis-ci.org/initbar/hmd)
 <p align="center">
-  <a href="https://travis-ci.org/initbar/hmd">
-    <img src="https://travis-ci.org/initbar/hmd.svg?branch=master">
-  </a>
-  <br>
   <img src="./docs/images/logo.png">
 </p>
 

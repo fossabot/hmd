@@ -1,7 +1,7 @@
-PWD    = $(shell pwd)
-
-SOURCE = $(PWD)/hmd
-OUTPUT = $(PWD)/build/hmd
+# project
+PROJECT = $(shell pwd)
+SOURCE  = $(PROJECT)/hmd
+OUTPUT  = $(PROJECT)/build/hmd
 
 all:
 	mkdir -pv build

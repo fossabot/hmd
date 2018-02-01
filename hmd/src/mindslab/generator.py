@@ -160,7 +160,7 @@ class HMDGenerator(AbstractGenerator):
         parsed = self.parser.parse(tokens) # syntax check occurs here.
 
         # merge the categories and the definitions to generate its matrix-form.
-        return self.__build_matrix(categories, definitions)
+        return self.__build_matrix(categories, parsed)
 
     #
     # private

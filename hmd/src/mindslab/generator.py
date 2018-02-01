@@ -17,21 +17,23 @@ class HMDSchema(object):
     ''' an abstract hmd schema.
     '''
 
+    __slots__ = ['category', 'definition']
+
     def __init__(self):
         self.category = self.definition = None
 
-    def pack(self, line=''):
+    def pack(self, line):
         ''' pack line into schema.
         '''
         if not line: return
-        if all([ x in line for x in ('$', '=') ]):
+        elif any(filter(lambda character:character in ('$', '='), line)):
             self.definition = line
         else:
             tokens = line.split('\t')
             if len(tokens) < 2: return
-            self.category, self.definition = [
-                tokens[:-1],
-                tokens[-1]]
+            self.category,
+            self.definition = [tokens[:-1],
+                               tokens[-1]]
         return bool(self.definition)
 
 class HMDGenerator(AbstractGenerator):

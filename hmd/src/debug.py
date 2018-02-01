@@ -20,25 +20,30 @@ def debug(category='', message=''):
 
     # create template
     timestamp = '%s[%s]%s' % (c_w, time.asctime(), rst)
-    template = ' '.join([timestamp, '%s[%s%s%s] %s', rst])
-    category = category.strip().lower()
+    template = ' '.join([timestamp, '%s[%s%s%s] %s%s', rst])
+    category = category.lower().strip()
 
     # INFO
     if category in ['i', 'info']:
-        sys.stdout.write(template % (c_w, c_g, 'info', c_w, message))
+        log = template % (c_w, c_g, 'info', c_w, c_g, message)
+        sys.stdout.write(log)
 
     # DEBUG
     elif category in ['d', 'debug']:
-        sys.stdout.write(template % (c_w, c_p, 'debug', c_w, message))
+        log = template % (c_w, c_p, 'debug', c_w, c_p, message)
+        sys.stdout.write(log)
 
     # WARN
     elif category in ['w', 'warn']:
-        sys.stderr.write(template % (c_w, c_r, 'warn', c_w, message))
+        log = template % (c_w, c_r, 'warn', c_w, c_r, message)
+        sys.stderr.write(log)
 
     # BUG
     elif category in ['b', 'bug']:
-        sys.stderr.write(template % (c_w, c_b, 'bug', c_w, message))
+        log = template % (c_w, c_b, 'bug', c_w, c_b, message)
+        sys.stderr.write(log)
 
     # default
     else:
-        sys.stdout.write(template % (c_w, c_w, 'log', c_w, message))
+        log = template % (c_w, c_w, 'log', c_w, c_w, message)
+        sys.stdout.write(log)

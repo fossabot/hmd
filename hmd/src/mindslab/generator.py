@@ -42,8 +42,7 @@ class HMDStruct(object):
         if not text: return
 
         # if `text` is a variable, define it as a `definition` since there would
-        # be no `categories` to attribute this schema with. The current variable
-        # schema is:
+        # be no `categories` to attribute with. The current variable format is:
         #
         # $variable = definition
         #

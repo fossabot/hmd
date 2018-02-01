@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 from src.abstract.automata.automata import AbstractAutomata
 from src.abstract.automata.automata import AbstractAutomataMachine
 from src.abstract.generator.generator import AbstractGenerator
@@ -9,37 +7,67 @@ from src.abstract.parser.parser import AbstractParser
 from src.debug import *
 from src.mindslab.grammar import HMDGrammar
 from src.mindslab.syntax import *
-
 import itertools
 import re
 import sys
 
+#
+# HMDStruct
+# ---------
+#
+# : An extensible basic unit of Hierarcical Multiple Dictionary.
+#
+# parameters:
+# + {str} categories -- tab-delimited HMD categories.
+# + {str} definition -- tab-delimited HMD definition.
+#
 class HMDStruct(object):
-    ''' an abstract hmd schema.
-    '''
 
-    __slots__ = ['category', 'definition']
+    __slots__ = ['categories', 'definition']
 
-    def __init__(self):
-        self.category = self.definition = None
+    def __init__(self,
+                 categories=None,
+                 definition=''):
+        self.categories = categories
+        self.definition = definition
 
-    def pack(self, line):
-        ''' pack line into schema.
-        '''
-        if not line: return
-        elif any(filter(lambda character:character in ('$', '='), line)):
-            self.definition = line
+    def define(self, text):
+        if not text: return
+
+        # if `text` is a variable, define it as a `definition` since there would
+        # be no `categories` to attribute this schema with.
+        elif '=' in text and '$' in text:
+            self.categories = None
+            self.definition = text
+
+        # otherwise, split the `text` using tab delimitor and define this schema
+        # with `categories` and `definitions`. The current specification is:
+        #
+        # +----------+----------+----+------------+
+        # | macro    | micro    |    | category   |
+        # | category | category | .. | definition |
+        # +----------+----------+----+------------+
+        #
+        # basic gist is:
+        #   1. split the text into tabs and assign to `tokens` variable.
+        #   2. assign categories upto the last index of `tokens`.
+        #   3. assign definition with the last index of `tokens`.
         else:
-            tokens = line.split('\t')
-            if len(tokens) < 2: return
-            self.category,
-            self.definition = [tokens[:-1],
-                               tokens[-1]]
+            tokens = text.split('\t')
+            if len(tokens) >= 2:
+                self.categories,
+                self.definition = [
+                    tokens[:-1],
+                    tokens[-1]]
         return bool(self.definition)
 
+#
+# HMDGenerator
+# ------------
+#
+# : MindsLab-customized generator logic.
+#
 class HMDGenerator(AbstractGenerator):
-    ''' default hierarchial multiple dictionary generator.
-    '''
 
     def __init__(self,
                  max_categories=10,
@@ -83,13 +111,13 @@ class HMDGenerator(AbstractGenerator):
         schemas = []
         for hmd in self.hmd:
             schema = HMDStruct()
-            if not schema.pack(hmd):
+            if not schema.define(hmd):
                 debug('w', "[GENERATOR] cannot create schema: '%s'\n" % hmd)
                 pass # disregard the unpackable format and continue
             else: schemas.append(schema)
 
         # categories must be length-filtered due to variables
-        categories = [ schema.category for schema in schemas if schema.category ]
+        categories = [ schema.categories for schema in schemas if schema.categories ]
         definitions = [ schema.definition for schema in schemas ]
 
         # parse and generate matrix
@@ -129,9 +157,9 @@ class HMDGenerator(AbstractGenerator):
             return self.__flatten(L[0]) + self.__flatten(L[1:])
         return L[:1] + self.__flatten(L[1:])
 
-    def __permute(self, category=[], definition=''):
-        ''' get cartesian product of definitions and pair with category.
-        + category {list} -- a list of category.
+    def __permute(self, categories=[], definition=''):
+        ''' get cartesian product of definitions and pair with categories.
+        + categories {list} -- a list of categories.
         + definition {list} -- definition.
         '''
         try:
@@ -162,13 +190,13 @@ class HMDGenerator(AbstractGenerator):
                 permutation = []
                 for pairable in product:
                     stack = sorted(s_q + [tuple(pairable)]) # restore order
-                    permutation.append([category, '(%s)' % ')('.join(map(lambda x:x[1], stack))])
+                    permutation.append([categories, '(%s)' % ')('.join(map(lambda x:x[1], stack))])
             except:
                 debug('w', '[GENERATOR] failed to pair categories and definitions\n')
                 permutation = []
 
         # there is no product
-        else: permutation = [[category, definition]]
+        else: permutation = [[categories, definition]]
         return permutation
 
     def __build_matrix(self, categories=[], definitions=[]):
@@ -179,32 +207,32 @@ class HMDGenerator(AbstractGenerator):
         try: assert bool(categories) and len(categories) == len(definitions)
         except AssertionError:
             debug('w', '[GENERATOR] merging not possible:\n')
-            debug('d', 'category   -> %i\n' % len(categories))
+            debug('d', 'categories   -> %i\n' % len(categories))
             debug('d', 'definition -> %i\n' % len(definitions))
             sys.exit(1)
 
-        # standardize category count
+        # standardize categories count
         matrix = []
         limit = min(min(map(len, categories)), self.max_categories) # find the smallest
         for i in xrange(len(categories)):
 
             # schema
-            category, definition = categories[i], definitions[i]
+            categories, definition = categories[i], definitions[i]
 
-            # normalize category count
-            deviation = int(len(category) - limit)
+            # normalize categories count
+            deviation = int(len(categories) - limit)
             distance = 0 - deviation # distance from origin
-            if deviation >= 0: category.extend([''] * distance)
+            if deviation >= 0: categories.extend([''] * distance)
             else:
                 partition = abs(distance - 1)
-                category = category[partition:].append("_".join(category[:partition]))
+                categories = categories[partition:].append("_".join(categories[:partition]))
 
             # compile matrix
-            for permutation in self.__permute(category, definition):
+            for permutation in self.__permute(categories, definition):
                 if not permutation: pass
-                category, definition = permutation
+                categories, definition = permutation
                 matrix.append('\t'.join([
-                    '\t'.join(category), # category
+                    '\t'.join(categories), # categories
                     '$'.join(definition[1:-1].split(')(')) # definition
                 ]))
 

@@ -14,13 +14,29 @@ import sys
 '''
 SOURCE HEADER:
 
+[function]
+i. flatten
+
 [class]
 i.  HMDStruct
 ii. HMDGenerator
 '''
 
-# i. HMDStruct
-# ------------
+# i. {function} flatten
+#
+# : Flatten nested lists into single dimensional list.
+#
+# [parameters]
+#   - {list} L -- nested lists.
+#
+def flatten(L=[]):
+    if not L: return L
+    if isinstance(L[0], tuple) or isinstance(L[0], list):
+        return flatten(L[0]) + flatten(L[1:])
+    return L[:1] + flatten(L[1:])
+
+# i. {class} HMDStruct
+# --------------------
 #
 # : An extensible basic unit of Hierarcical Multiple Dictionary.
 #
@@ -170,15 +186,6 @@ class HMDGenerator(AbstractGenerator):
     # private
     #
 
-    def __flatten(self, L=[]):
-        ''' recursively flatten nested lists/tuples.
-        + L {list|tuple} -- nested list/tuple.
-        '''
-        if not L: return L
-        if isinstance(L[0], tuple) or isinstance(L[0], list):
-            return self.__flatten(L[0]) + self.__flatten(L[1:])
-        return L[:1] + self.__flatten(L[1:])
-
     def __permute(self, categories=[], definition=''):
         ''' get cartesian product of definitions and pair with categories.
         + categories {list} -- a list of categories.
@@ -204,7 +211,7 @@ class HMDGenerator(AbstractGenerator):
 
             # flatten products
             product = map(list, [ nest if isinstance(nest, basestring)
-                                  else self.__flatten(nest)
+                                  else flatten(nest)
                                   for nest in nested ])
 
             # pair products with categories

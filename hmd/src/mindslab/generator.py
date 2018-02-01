@@ -35,22 +35,17 @@ class HMDStruct(object):
 
         # if `text` is a variable, define it as a `definition` since there would
         # be no `categories` to attribute this schema with.
-        elif '=' in text and '$' in text:
+        elif '$' in text and '=' in text:
             self.categories = None
             self.definition = text
 
         # otherwise, split the `text` using tab delimitor and define this schema
         # with `categories` and `definitions`. The current specification is:
         #
-        # +----------+----------+----+------------+
-        # | macro    | micro    |    | category   |
-        # | category | category | .. | definition |
-        # +----------+----------+----+------------+
-        #
-        # the basic gist of definition logic is:
-        #   1. split the text into tabs and assign to `tokens` variable.
-        #   2. assign categories upto the last index of `tokens`.
-        #   3. assign definition with the last index of `tokens`.
+        # +-----------+--------------+-------------+-----------------+
+        # | top-level | second-level | third-level |    |            |
+        # | category  | category     | category    | .. | definition |
+        # +-----------+--------------+-------------+-----------------+
         else:
             tokens = text.split('\t')
             if len(tokens) >= 2:

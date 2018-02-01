@@ -42,7 +42,12 @@ class HMDStruct(object):
         if not text: return
 
         # if `text` is a variable, define it as a `definition` since there would
-        # be no `categories` to attribute this schema with.
+        # be no `categories` to attribute this schema with. The current variable
+        # schema is:
+        #
+        # $variable = definition
+        #
+        # which makes '$' and '=' tokens "identifiers" to identify a variable.
         elif '$' in text and '=' in text:
             self.categories = None
             self.definition = text

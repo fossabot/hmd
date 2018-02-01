@@ -11,15 +11,14 @@ import itertools
 import re
 import sys
 
-#
 # HMDStruct
 # ---------
 #
 # : An extensible basic unit of Hierarcical Multiple Dictionary.
 #
-# parameters:
-# + {str} categories -- tab-delimited HMD categories.
-# + {str} definition -- tab-delimited HMD definition.
+# [parameters]
+#   - {str} categories -- tab-delimited HMD categories.
+#   - {str} definition -- tab-delimited HMD definition.
 #
 class HMDStruct(object):
 
@@ -48,7 +47,7 @@ class HMDStruct(object):
         # | category | category | .. | definition |
         # +----------+----------+----+------------+
         #
-        # basic gist is:
+        # the basic gist of definition logic is:
         #   1. split the text into tabs and assign to `tokens` variable.
         #   2. assign categories upto the last index of `tokens`.
         #   3. assign definition with the last index of `tokens`.

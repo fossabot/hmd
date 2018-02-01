@@ -141,13 +141,25 @@ class HMDGenerator(AbstractGenerator):
             else:
                 structs.append(struct)
 
-        # categories must be length-filtered due to variables
-        categories = [ schema.categories for schema in schemas if schema.categories ]
-        definitions = [ schema.definition for schema in schemas ]
+        # create index of all categories and definitions in order to separately
+        # syntax check the definitions before merging the two and generating
+        # its matrix-form.
+        categories = [
+            struct.categories
+            for struct in structs
+            if struct.categories
+        ]
+        definitions = [
+            struct.definition
+            for struct in structs
+            if struct.definition
+        ]
 
-        # parse and generate matrix
+        # tokenize and parse the definitions.
         tokens = self.lexer.lex(definitions)
-        definitions = self.parser.parse(tokens)
+        parsed = self.parser.parse(tokens) # syntax check occurs here.
+
+        # merge the categories and the definitions to generate its matrix-form.
         return self.__build_matrix(categories, definitions)
 
     #
@@ -222,7 +234,7 @@ class HMDGenerator(AbstractGenerator):
         limit = min(min(map(len, categories)), self.max_categories) # find the smallest
         for i in xrange(len(categories)):
 
-            # schema
+            # struct
             categories, definition = categories[i], definitions[i]
 
             # normalize categories count

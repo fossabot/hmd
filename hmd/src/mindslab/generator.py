@@ -69,12 +69,12 @@ class HMDStruct(object):
 # : Generator logic customized for MindsLab.
 #
 # [parameters]
+#   - {dict} syntax -- linguistic context.
+#   - {bool} hmd_optimized -- optimize the returned result.
+#   - {bool} hmd_sorted -- sort the returned result.
+#   - {bool} hmd_unique -- distinct returned result.
 #   - {int} max_categories -- allowed number of categories until the surplus
 #           categories is merged with the bottom-most level category.
-#   - {bool} hmd_optimized -- optimization.
-#   - {bool} hmd_sorted -- sort the output result.
-#   - {bool} hmd_unique -- distinct output result.
-#   - {dict} syntax -- linguistic syntax.
 #
 # [notes]
 #   1. In order to change the language context of the generator, define a new

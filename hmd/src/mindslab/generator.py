@@ -23,6 +23,7 @@ ii. HMDGenerator
 '''
 
 # i. {function} flatten
+# ---------------------
 #
 # : Recursively flatten nested arrays into single dimensional array.
 #

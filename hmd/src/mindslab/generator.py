@@ -11,8 +11,16 @@ import itertools
 import re
 import sys
 
-# HMDStruct
-# ---------
+'''
+SOURCE HEADER:
+
+[class]
+i.  HMDStruct
+ii. HMDGenerator
+'''
+
+# i. HMDStruct
+# ------------
 #
 # : An extensible basic unit of Hierarcical Multiple Dictionary.
 #
@@ -55,37 +63,50 @@ class HMDStruct(object):
                     tokens[-1]]
         return bool(self.definition)
 
+# ii. HMDGenerator
+# ----------------
 #
-# HMDGenerator
-# ------------
+# : Generator logic customized for MindsLab.
 #
-# : MindsLab-customized generator logic.
+# [parameters]
+#   - {int} max_categories -- allowed number of categories until the surplus
+#           categories is merged with the bottom-most level category.
+#   - {bool} hmd_optimized -- optimization.
+#   - {bool} hmd_sorted -- sort the output result.
+#   - {bool} hmd_unique -- distinct output result.
+#   - {dict} syntax -- linguistic syntax.
+#
+# [notes]
+#   1. In order to change the language context of the generator, define a new
+#      language syntax (e.g. "HMDSyntaxKorean") and pass the new dictionary
+#      instead of the "HMDSyntaxDefault" (English).
 #
 class HMDGenerator(AbstractGenerator):
 
     def __init__(self,
-                 max_categories=10,
+                 syntax=HMDSyntaxDefault,
                  hmd_optimized=False,
                  hmd_sorted=False,
-                 hmd_unique=False):
+                 hmd_unique=False,
+                 max_categories=3):
 
         # static
-        self.syntax = HMDSyntaxDefault
         self.grammar = HMDGrammar()
+        self.syntax = syntax
 
         # initialization
         self.lexer = AbstractLexer(self.syntax)
         self.parser = AbstractParser(self.grammar)
 
         # build options
-        self.max_categories = max_categories
         self.hmd_optimized = hmd_optimized
         self.hmd_sorted = hmd_sorted
         self.hmd_unique = hmd_unique
+        self.max_categories = max_categories
 
         # temporary states
-        self.hmd = None
         self.matrix = None
+        self.hmd = None
 
     #
     # public

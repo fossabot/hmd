@@ -113,23 +113,33 @@ class HMDGenerator(AbstractGenerator):
     #
 
     def generate(self, lines=[]):
-        ''' compile hmd dictionary to matrix form.
-        '''
         if not lines: return
-        self.__initialize_hmd(lines)
 
-        # delete comments
-        self.__remove_comments()
+        # pre-process the input lines with generation flags (e.g. sort)
+        # for the lines that exist (a.k.a. non-empty).
+        try:
+            self.hmd = [ str(line).strip() for line in lines if line ]
+            if self.hmd_unique: self.hmd = list(set(self.hmd))
+            if self.hmd_sorted: self.hmd.sort() # inline sorting
+        except:
+            debug('w', 'GENERATOR => unable to initialize hmd\n')
+            raise
+
+        # remove comments based on comment token from the `self.syntax`.
+        # If all input were comments, return None since no generation is
+        # necessary from this point.
+        comment = r'^%s.+$' % self.syntax.get('COMMENT', '#')
+        self.hmd = filter(lambda line:not re.findall(comment, line), self.hmd)
         if not self.hmd: return
 
-        # divide lines into hmd-schema
-        schemas = []
+        # convert each HMD lines into HMDStruct for easier manipulation.
+        structs = []
         for hmd in self.hmd:
-            schema = HMDStruct()
-            if not schema.define(hmd):
-                debug('w', "[GENERATOR] cannot create schema: '%s'\n" % hmd)
-                pass # disregard the unpackable format and continue
-            else: schemas.append(schema)
+            struct = HMDStruct()
+            if not struct.define(hmd):
+                debug('w', "GENERATOR => cannot create schema from '%s'\n" % hmd)
+            else:
+                structs.append(struct)
 
         # categories must be length-filtered due to variables
         categories = [ schema.categories for schema in schemas if schema.categories ]
@@ -143,25 +153,6 @@ class HMDGenerator(AbstractGenerator):
     #
     # private
     #
-
-    def __initialize_hmd(self, lines=[]):
-        ''' initialize self.hmd with raw lines.
-        + lines {list} -- lines to convert from hmd to matrix.
-        '''
-        try:
-            self.hmd = [ line.strip() for line in lines if line ]
-            if self.hmd_unique: self.hmd = list(set(self.hmd)) # unique
-            if self.hmd_sorted: self.hmd.sort() # sort
-        except:
-            debug('w', '[GENERATOR] unable to initialize hmd\n')
-            sys.exit(1)
-
-    def __remove_comments(self):
-        ''' remove all commented lines.
-        '''
-        if not self.hmd: return
-        comments = r'^%s.+$' % self.syntax.get('COMMENT', '#')
-        self.hmd = filter(lambda x:not re.findall(comments, x), self.hmd)
 
     def __flatten(self, L=[]):
         ''' recursively flatten nested lists/tuples.

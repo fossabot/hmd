@@ -1,10 +1,11 @@
 # project
 PROJECT = $(shell pwd)
 SOURCE  = $(PROJECT)/hmd
+BUILD   = $(PROJECT)/build
 OUTPUT  = $(PROJECT)/build/hmd
 
 all:
-	mkdir -pv build
+	mkdir -pv $(BUILD)
 	cd $(SOURCE) && \
 	   zip -rv $(OUTPUT).zip * && \
 	   echo "#!/usr/bin/python" > $(OUTPUT) && \
@@ -16,7 +17,7 @@ test:
 	python $(SOURCE) -t
 
 clean:
-	rm -rfv ./build
+	rm -rfv $(BUILD)
 	find $(SOURCE) \
 	     -type f \
 	     -iname "*.py[oc]" \

@@ -24,16 +24,16 @@ ii. HMDGenerator
 
 # i. {function} flatten
 #
-# : Flatten nested lists into single dimensional list.
+# : Recursively flatten nested arrays into single dimensional array.
 #
 # [parameters]
-#   - {list} L -- nested lists.
+#   - {list} arrays -- nested arrays.
 #
-def flatten(L=[]):
-    if not L: return L
-    if isinstance(L[0], tuple) or isinstance(L[0], list):
-        return flatten(L[0]) + flatten(L[1:])
-    return L[:1] + flatten(L[1:])
+def flatten(arrays=[]):
+    if not arrays: return []
+    if isinstance(arrays[0], tuple) or isinstance(arrays[0], list):
+        return flatten(arrays[0]) + flatten(arrays[1:])
+    return arrays[:1] + flatten(arrays[1:])
 
 # i. {class} HMDStruct
 # --------------------

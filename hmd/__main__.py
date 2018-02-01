@@ -1,13 +1,10 @@
 #!/usr/bin/env python
 
-from __future__ import absolute_import
-from errno import ENOENT
-
+import errno
 import os
 import sys
 
 from __init__ import *
-
 try:
     from src.abstract.automata.automata import AbstractAutomata
     from src.abstract.automata.automata import AbstractAutomataMachine
@@ -19,7 +16,7 @@ try:
     from src.abstract.parser.parser import AbstractParser
     from src.debug import *
     from src.mindslab.generator import HMDGenerator
-    from src.mindslab.generator import HMDSchema
+    from src.mindslab.generator import HMDStruct
     from src.mindslab.grammar import HMDGrammar
     from src.mindslab.syntax import *
     from tests.test_automata import TestAutomata
@@ -141,7 +138,7 @@ if __name__ == '__main__':
         elif args.f:
             if not os.path.isfile(args.f):
                 debug('w', "file '%s' does not exist.\n" % args.f)
-                sys.exit(ENOENT)
+                sys.exit(errno.ENOENT)
             with open(args.f) as f:
                 c = f.read().split('\n')
                 result = generator.generate(c)

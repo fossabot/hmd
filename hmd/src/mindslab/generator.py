@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
-from src.abstract.automata.automata import AbstractAutomata, AbstractAutomataMachine
+from src.abstract.automata.automata import AbstractAutomata
+from src.abstract.automata.automata import AbstractAutomataMachine
 from src.abstract.generator.generator import AbstractGenerator
 from src.abstract.lexer.lexer import AbstractLexer
 from src.abstract.lexer.token import AbstractToken
@@ -13,7 +14,7 @@ import itertools
 import re
 import sys
 
-class HMDSchema(object):
+class HMDStruct(object):
     ''' an abstract hmd schema.
     '''
 
@@ -81,7 +82,7 @@ class HMDGenerator(AbstractGenerator):
         # divide lines into hmd-schema
         schemas = []
         for hmd in self.hmd:
-            schema = HMDSchema()
+            schema = HMDStruct()
             if not schema.pack(hmd):
                 debug('w', "[GENERATOR] cannot create schema: '%s'\n" % hmd)
                 pass # disregard the unpackable format and continue

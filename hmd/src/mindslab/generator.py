@@ -11,41 +11,82 @@ import itertools
 import re
 import sys
 
-'''
-SOURCE HEADER:
-
-[function]
-i. flatten
-
-[class]
-i.  HMDStruct
-ii. HMDGenerator
-'''
-
-# i. {function} flatten
-# ---------------------
+# flatten
+# -------
 #
 # : Recursively flatten nested arrays into single dimensional array.
 #
-# [parameters]
-#   - {list} arrays -- nested arrays.
-#
 def flatten(arrays=[]):
+    '''
+    + parameters:
+    - {list} arrays -- nested arrays.
+    '''
     if not arrays: return []
-    if isinstance(arrays[0], tuple) or isinstance(arrays[0], list):
+    elif isinstance(arrays[0], tuple) or isinstance(arrays[0], list):
         return flatten(arrays[0]) + flatten(arrays[1:])
     return arrays[:1] + flatten(arrays[1:])
 
-# i. {class} HMDStruct
-# --------------------
+# permute
+# -------
+#
+# : Get cartesian products of input lists.
+#
+# TODO: move this outside to function.
+#
+def permute(self, categories=[], definition=''):
+    '''
+    + parameters:
+    - categories {list} -- a list of categories.
+    - definition {list} -- definition.
+    '''
+    try:
+        blocks = definition[1:-1].split(')(')
+        assert bool(blocks)
+    except AssertionError: raise
+    except IndexError: raise
+
+    # tokenize into sets and also remember their index
+    s_p, s_q = [], []
+    for i, block in enumerate(blocks):
+        if '|' in block: s_p.append([ (i, block) for block in block.split('|') ])
+        else: s_q.append((i, block))
+
+    # find cartesian product
+    if s_p:
+
+        # calculate product
+        nested = reduce(lambda x,y:itertools.product(x,y), s_p)
+
+        # flatten products
+        product = map(list, [ nest if isinstance(nest, basestring)
+                              else flatten(nest)
+                              for nest in nested ])
+
+        # pair products with categories
+        try:
+            permutation = []
+            for pairable in product:
+                stack = sorted(s_q + [tuple(pairable)]) # restore order
+                permutation.append([categories, '(%s)' % ')('.join(map(lambda x:x[1], stack))])
+        except:
+            debug('w', '[GENERATOR] failed to pair categories and definitions\n')
+            permutation = []
+
+    # there is no product
+    else: permutation = [[categories, definition]]
+    return permutation
+
+# HMDStruct
+# ---------
 #
 # : An extensible basic unit of Hierarcical Multiple Dictionary.
 #
-# [parameters]
-#   - {str} categories -- tab-delimited HMD categories.
-#   - {str} definition -- tab-delimited HMD definition.
-#
 class HMDStruct(object):
+    '''
+    + parameters:
+    - {str} categories -- tab-delimited HMD categories.
+    - {str} definition -- tab-delimited HMD definition.
+    '''
 
     __slots__ = ['categories', 'definition']
 
@@ -84,25 +125,27 @@ class HMDStruct(object):
                     tokens[-1]]
         return bool(self.definition)
 
-# ii. HMDGenerator
-# ----------------
+# HMDGenerator
+# ------------
 #
 # : Generator logic customized for MindsLab.
 #
-# [parameters]
-#   - {dict} syntax -- linguistic context.
-#   - {bool} hmd_optimized -- optimize the returned result.
-#   - {bool} hmd_sorted -- sort the returned result.
-#   - {bool} hmd_unique -- distinct returned result.
-#   - {int} max_categories -- allowed number of categories until the surplus
-#           categories is merged with the bottom-most level category.
-#
-# [notes]
-#   1. In order to change the language context of the generator, define a new
-#      language syntax (e.g. "HMDSyntaxKorean") and pass the new dictionary
-#      instead of the "HMDSyntaxDefault" (English).
-#
 class HMDGenerator(AbstractGenerator):
+    '''
+    + parameters:
+    - {dict} syntax -- linguistic context.
+    - {bool} hmd_optimized -- optimize the returned result.
+    - {bool} hmd_sorted -- sort the returned result.
+    - {bool} hmd_unique -- distinct returned result.
+    - {int} max_categories -- allowed number of categories until the surplus
+                              categories is merged with the bottom-most level
+                              category.
+
+    + notes:
+    - In order to change the language context of the generator, define a new
+      language syntax (e.g. "HMDSyntaxKorean") and pass the new dictionary
+      instead of the "HMDSyntaxDefault" (English).
+    '''
 
     def __init__(self,
                  syntax=HMDSyntaxDefault,
@@ -126,15 +169,21 @@ class HMDGenerator(AbstractGenerator):
         self.max_categories = max_categories
 
         # temporary states
-        self.matrix = None
-        self.hmd = None
+        self.hmd = []
 
+    # generate
+    # --------
     #
-    # public
+    # : Generate a matrix-form of Hierarchical Multiple Dictionary from
+    #   input text.
     #
-
     def generate(self, lines=[]):
-        if not lines: return
+        '''
+        + parameters:
+        - {list} lines -- input text split by newlines, tabs, or other
+                          delimieter.
+        '''
+        if not lines: return ''
 
         # pre-process the input lines with generation flags (e.g. sort)
         # for the lines that exist (a.k.a. non-empty).
@@ -183,54 +232,13 @@ class HMDGenerator(AbstractGenerator):
         # merge the categories and the definitions to generate its matrix-form.
         return self.__build_matrix(categories, parsed)
 
+    # __build_matrix
+    # --------------
     #
-    # private
+    # build matrix from hmd data.
     #
-
-    def __permute(self, categories=[], definition=''):
-        ''' get cartesian product of definitions and pair with categories.
-        + categories {list} -- a list of categories.
-        + definition {list} -- definition.
-        '''
-        try:
-            blocks = definition[1:-1].split(')(')
-            assert bool(blocks)
-        except AssertionError: raise
-        except IndexError: raise
-
-        # tokenize into sets and also remember their index
-        s_p, s_q = [], []
-        for i, block in enumerate(blocks):
-            if '|' in block: s_p.append([ (i, block) for block in block.split('|') ])
-            else: s_q.append((i, block))
-
-        # find cartesian product
-        if s_p:
-
-            # calculate product
-            nested = reduce(lambda x,y:itertools.product(x,y), s_p)
-
-            # flatten products
-            product = map(list, [ nest if isinstance(nest, basestring)
-                                  else flatten(nest)
-                                  for nest in nested ])
-
-            # pair products with categories
-            try:
-                permutation = []
-                for pairable in product:
-                    stack = sorted(s_q + [tuple(pairable)]) # restore order
-                    permutation.append([categories, '(%s)' % ')('.join(map(lambda x:x[1], stack))])
-            except:
-                debug('w', '[GENERATOR] failed to pair categories and definitions\n')
-                permutation = []
-
-        # there is no product
-        else: permutation = [[categories, definition]]
-        return permutation
-
     def __build_matrix(self, categories=[], definitions=[]):
-        ''' build matrix from hmd data.
+        '''
         + categories {list} -- a list of categories.
         + definitions {list} -- a list of definitions.
         '''
@@ -258,7 +266,7 @@ class HMDGenerator(AbstractGenerator):
                 categories = categories[partition:].append("_".join(categories[:partition]))
 
             # compile matrix
-            for permutation in self.__permute(categories, definition):
+            for permutation in permute(categories, definition):
                 if not permutation: pass
                 categories, definition = permutation
                 matrix.append('\t'.join([

@@ -17,14 +17,14 @@ class HMDGrammar(object):
                 state='STRING',
                 basetype='LITERAL',
                 transition=[
-                    'STRING',
-                    'NUMBER',
-                    'SPACE',
-                    'RULE_END',
                     'GRAMMAR_OR',
                     'MATCH_BEFORE',
-                    'VARIABLE_IDENTIFIER',
-                    'VARIABLE_ASSIGNMENT'
+                    'NUMBER',
+                    'RULE_END',
+                    'SPACE',
+                    'STRING',
+                    'VARIABLE_ASSIGNMENT',
+                    'VARIABLE_IDENTIFIER'
                 ]
             )
         )
@@ -35,15 +35,15 @@ class HMDGrammar(object):
                 state='NUMBER',
                 basetype='LITERAL',
                 transition=[
-                    'STRING',
-                    'NUMBER',
-                    'SPACE',
-                    'RULE_END',
                     'GRAMMAR_OR',
                     'GRAMMAR_WILD',
-                    'VARIABLE_ASSIGNMENT',
                     'MATCH_ALWAYS',
-                    'MATCH_NOT'
+                    'MATCH_NOT',
+                    'NUMBER',
+                    'RULE_END',
+                    'SPACE',
+                    'STRING',
+                    'VARIABLE_ASSIGNMENT'
                 ]
             )
         )
@@ -54,12 +54,12 @@ class HMDGrammar(object):
                 state='SPACE',
                 basetype='LITERAL',
                 transition=[
-                    'STRING',
-                    'NUMBER',
-                    'SPACE',
-                    'RULE_END',
                     'GRAMMAR_OR',
                     'GRAMMAR_WILD',
+                    'NUMBER',
+                    'RULE_END',
+                    'SPACE',
+                    'STRING',
                     'VARIABLE_ASSIGNMENT'
                 ]
             )
@@ -71,14 +71,14 @@ class HMDGrammar(object):
                 state='RULE_BEGIN',
                 basetype='EXPRESSION',
                 transition=[
-                    'STRING',
-                    'NUMBER',
-                    'MATCH_NEXT',
-                    'MATCH_BEFORE',
-                    'MATCH_ALWAYS',
-                    'MATCH_NOT',
                     'GRAMMAR_HAT',
                     'GRAMMAR_WILD',
+                    'MATCH_ALWAYS',
+                    'MATCH_BEFORE',
+                    'MATCH_NEXT',
+                    'MATCH_NOT',
+                    'NUMBER',
+                    'STRING',
                     'VARIABLE_IDENTIFIER'
                 ]
             )
@@ -113,8 +113,8 @@ class HMDGrammar(object):
                 state='MATCH_BEFORE',
                 basetype='EXPRESSION',
                 transition=[
-                    'STRING',
-                    'NUMBER'
+                    'NUMBER',
+                    'STRING'
                 ]
             )
         )
@@ -125,12 +125,12 @@ class HMDGrammar(object):
                 state='MATCH_ALWAYS',
                 basetype='EXPRESSION',
                 transition=[
-                    'STRING',
+                    'GRAMMAR_HAT',
+                    'GRAMMAR_WILD',
+                    'MATCH_NOT',
                     'NUMBER',
                     'SPACE',
-                    'MATCH_NOT',
-                    'GRAMMAR_HAT',
-                    'GRAMMAR_WILD'
+                    'STRING'
                 ]
             )
         )
@@ -141,13 +141,13 @@ class HMDGrammar(object):
                 state='MATCH_NOT',
                 basetype='EXPRESSION',
                 transition=[
-                    'STRING',
-                    'NUMBER',
-                    'SPACE',
                     'GRAMMAR_HAT',
                     'GRAMMAR_WILD',
                     'MATCH_BEFORE',
-                    'MATCH_NEXT'
+                    'MATCH_NEXT',
+                    'NUMBER',
+                    'SPACE',
+                    'STRING'
                 ]
             )
         )
@@ -169,15 +169,15 @@ class HMDGrammar(object):
                 state='GRAMMAR_WILD',
                 basetype='EXPRESSION',
                 transition=[
-                    'STRING',
-                    'NUMBER',
-                    'SPACE',
-                    'MATCH_NEXT',
-                    'MATCH_BEFORE',
-                    'MATCH_ALWAYS',
-                    'MATCH_NOT',
                     'GRAMMAR_HAT',
-                    'RULE_END'
+                    'MATCH_ALWAYS',
+                    'MATCH_BEFORE',
+                    'MATCH_NEXT',
+                    'MATCH_NOT',
+                    'NUMBER',
+                    'RULE_END',
+                    'SPACE',
+                    'STRING'
                 ]
             )
         )
@@ -188,15 +188,15 @@ class HMDGrammar(object):
                 state='GRAMMAR_OR',
                 basetype='EXPRESSION',
                 transition=[
-                    'STRING',
+                    'GRAMMAR_HAT',
+                    'GRAMMAR_WILD',
+                    'MATCH_ALWAYS',
+                    'MATCH_BEFORE',
+                    'MATCH_NEXT',
+                    'MATCH_NOT',
                     'NUMBER',
                     'SPACE',
-                    'MATCH_NEXT',
-                    'MATCH_BEFORE',
-                    'MATCH_ALWAYS',
-                    'MATCH_NOT',
-                    'GRAMMAR_HAT',
-                    'GRAMMAR_WILD'
+                    'STRING'
                 ]
             )
         )
@@ -218,18 +218,18 @@ class HMDGrammar(object):
                 state='VARIABLE_ASSIGNMENT',
                 basetype='EXPRESSION',
                 transition=[
-                    'STRING',
-                    'NUMBER',
-                    'SPACE',
-                    'MATCH_NEXT',
-                    'MATCH_BEFORE',
-                    'MATCH_ALWAYS',
-                    'MATCH_NOT',
                     'GRAMMAR_HAT',
+                    'GRAMMAR_OR',
                     'GRAMMAR_WILD',
+                    'MATCH_ALWAYS',
+                    'MATCH_BEFORE',
+                    'MATCH_NEXT',
+                    'MATCH_NOT',
+                    'NUMBER',
                     'RULE_BEGIN',
                     'RULE_END',
-                    'GRAMMAR_OR'
+                    'SPACE',
+                    'STRING'
                 ]
             )
         )
@@ -240,21 +240,21 @@ class HMDGrammar(object):
                 state='GRAMMAR',
                 basetype='EXPRESSION',
                 transition=[
-                    'STRING',
+                    'COMMENT',
+                    'GRAMMAR_HAT',
+                    'GRAMMAR_OR',
+                    'GRAMMAR_WILD',
+                    'MATCH_ALWAYS',
+                    'MATCH_BEFORE',
+                    'MATCH_NEXT',
+                    'MATCH_NOT',
                     'NUMBER',
-                    'SPACE',
                     'RULE_BEGIN',
                     'RULE_END',
-                    'MATCH_NEXT',
-                    'MATCH_BEFORE',
-                    'MATCH_ALWAYS',
-                    'MATCH_NOT',
-                    'GRAMMAR_HAT',
-                    'GRAMMAR_WILD',
-                    'GRAMMAR_OR',
-                    'VARIABLE_IDENTIFIER',
+                    'SPACE',
+                    'STRING',
                     'VARIABLE_ASSIGNMENT',
-                    'COMMENT'
+                    'VARIABLE_IDENTIFIER'
                 ]
             )
         )

@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/initbar/hmd.svg?branch=master)](https://travis-ci.org/initbar/hmd)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Finitbar%2Fhmd.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Finitbar%2Fhmd?ref=badge_shield)
 <p align="center">
   <img src="./docs/images/logo.png">
 </p>
@@ -67,3 +68,6 @@ Since the syntax of Hierarchial Multiple Dictionary (HMD) does not resemble that
 ## License
 
 **hmd** is under [MIT License](./LICENSE.md).
+
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Finitbar%2Fhmd.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Finitbar%2Fhmd?ref=badge_large)
